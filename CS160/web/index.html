@@ -6,12 +6,25 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Login</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head> 
+        <link rel="stylesheet" href="styles/main.css" type="text/css"/>  
+    </head>
     <body>
-        <div>TODO write content</div>
-        <p> Congratulation Team Electric Member!!! lolz </p>
+        
+        <img src="Images/sjsu_logo.jpg" alt = "" width = "250"><br>
+    
+        <label> User Name: </label><br>
+        <input type = "text" name ="username"><br>
+        <label> Password: </label><br>
+        <input type = "password" name = "password">
+        <label>&nbsp;</label>
+        <form action ="Home/home.html" method="post">
+            <input type="submit" value="Login"> 
+        </form>
+        <form action ="Register/register.html" method="post" > 
+            <input type ="submit" value="Register"> 
+        </form>
     </body>
 </html>
