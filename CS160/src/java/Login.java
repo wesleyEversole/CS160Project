@@ -35,21 +35,38 @@ public class Login extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-            //if (email.matches("[a-z]*|[A-Z]@sjsu//.edu")) {
+            String name=("([A-Z]|[a-z])[a-z]*");
+            String lastname="\\."+name;
+            String emailRegx=name+lastname+"@sjsu.edu";
+            if (email.matches(emailRegx)) {
             //  System.out.println("email is not : " + email);
-            //  System.out.println("password is not :" + password);
+            //System.out.println("password is not :" + password);
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Servlet Login</title>");
             out.println("</head>");
             out.println("<body>");
+            out.println("<h1>email is a sjsu email <h1>");
             out.println("<h1>Servlet Login at " + request.getContextPath() + "</h1>");
             out.println("<h2> email= " + email + "</h1>");
             out.println("<h2> password= " + password + "</h1>");
             out.println("</body>");
             out.println("</html>");
-            //}
+            }else{
+             out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet Login</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1> bad email adress:email adress is not a sjsu email <h1>");
+            out.println("<h1>Servlet Login at " + request.getContextPath() + "</h1>");
+            out.println("<h2> email= " + email + "</h1>");
+            out.println("<h2> password= " + password + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+            }
         }
     }
 
