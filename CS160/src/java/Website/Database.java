@@ -35,7 +35,7 @@ public class Database {
         }
     }
 
-    public Connection mySQLdbconnect() throws SQLException {
+    protected Connection mySQLdbconnect() throws SQLException {
         Connection con = null;
         try {
             Object newInstance = Class.forName("com.mysql.jdbc.Driver").newInstance();
