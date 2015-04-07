@@ -21,7 +21,7 @@ public class Database {
     public Database() {
         try {
             String buffer;
-            File file = new File("C:\\Users\\wesley\\Documents\\GitHub\\CS160Project\\TestingGround\\src\\testingground\\stuff.txt");
+            File file = new File("C:\\websitetesting\\stuff.txt");
             Scanner intake = new Scanner(file);
             while (intake.hasNextLine()) {
                 buffer = intake.nextLine();
