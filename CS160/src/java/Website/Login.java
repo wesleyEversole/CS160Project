@@ -30,12 +30,13 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("/login")
 public class Login extends HttpServlet {
+
     //using this for the salt may need to be something else
     //like the password file a file for the init random gen
+
     private int id;
     private String accName;
-    private String debugbuff="testing after this";
-    /**
+     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
@@ -54,10 +55,11 @@ public class Login extends HttpServlet {
             String name = ("([A-Z]|[a-z])[a-z]*");
             String lastname = "\\." + name;
             String emailRegx = name + lastname + "@sjsu.edu";
-            
+
             if (email.matches(emailRegx)) {
                 //  System.out.println("email is not : " + email);
-                //System.out.println("password is not :" + password);               
+                //System.out.println("password is not :" + password); 
+                System.out.println("authUser = " + authUser(email, password));
                 if (authUser(email, password)) {
                     out.println("<!DOCTYPE html>");
                     out.println("<html>");
@@ -67,29 +69,28 @@ public class Login extends HttpServlet {
                     out.println("<body>");
                     out.println("<h1>email is a sjsu email <h1>");
                     out.println("<h1>Servlet Login at " + request.getContextPath() + "</h1>");
-                    out.println("<h2> account Name= "+accName+"</h2>");
+                    out.println("<h2> account Name= " + accName + "</h2>");
                     out.println("<h2> email= " + email + "</h2>");
                     //this is bad but is here for debug REMOVE at later point
                     out.println("<h2> password= " + hashPW(password, makeSalt(id)) + "</h2>");
                     out.println("<h2>This is a vaild user</h2>");
                     out.println("</body>");
                     out.println("</html>");
-                    //response.sendRedirect("loginconfirm.html");
-                }else{
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Servlet Login</title>");
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<h1> bad authUser <h1>");
-                out.println("<h1>Servlet Login at " + request.getContextPath() + "</h1>");
-                out.println("<h2> email= " + email + "</h2>");
-                out.println("<h2> password= " + password + "</h2>");
-                out.println("<h2> hashedpassword= " + hashPW(password, makeSalt(id)) + "</h2>");
-                out.println("<h2> debugbuff="+debugbuff+"</h2>");
-                out.println("</body>");
-                out.println("</html>");
+                    response.sendRedirect("loginconfirm.html");
+                } else {
+                    out.println("<!DOCTYPE html>");
+                    out.println("<html>");
+                    out.println("<head>");
+                    out.println("<title>Servlet Login</title>");
+                    out.println("</head>");
+                    out.println("<body>");
+                    out.println("<h1> bad authUser <h1>");
+                    out.println("<h1>Servlet Login at " + request.getContextPath() + "</h1>");
+                    out.println("<h2> email= " + email + "</h2>");
+                    out.println("<h2> password= " + password + "</h2>");
+                    out.println("<h2> hashedpassword= " + hashPW(password, makeSalt(id)) + "</h2>");
+                    out.println("</body>");
+                    out.println("</html>");
                 }
             } else {
                 out.println("<!DOCTYPE html>");
@@ -102,7 +103,6 @@ public class Login extends HttpServlet {
                 out.println("<h1>Servlet Login at " + request.getContextPath() + "</h1>");
                 out.println("<h2> email= " + email + "</h2>");
                 out.println("<h2> password= " + password + "</h2>");
-                out.println("<h2> debugbuff="+debugbuff+"</h2>");
                 out.println("</body>");
                 out.println("</html>");
                 //response.sendRedirect("loginconfirm.html");
@@ -113,30 +113,30 @@ public class Login extends HttpServlet {
     }
 
     private boolean authUser(String email, String password) {
+        
         boolean retv = false;
-        String storedPW="";
-        String buffPW="";
-        buffPW = password;
+        String storedPW = "";
+        String buffPW = password;
         Database db = new Database();
         Statement statement = null;
         ResultSet rs = null;
         //forlater use
         try {
-             Connection con = db.mySQLdbconnect();
-                statement = con.createStatement();
-                rs = statement.executeQuery("SELECT idAccounts, userName, password FROM mydb.accounts ma WHERE ma.email='"+email+"'");
-                debugbuff+="does the statment fail ";
-                while (rs.next()) {
-                    id = rs.getInt("idAccounts");
-                    accName = rs.getString("userName");
-                    storedPW = rs.getString("password");
-                    debugbuff+="checking storedPW"+storedPW;
-                }
-            
+            Connection con = db.mySQLdbconnect();
+            statement = con.createStatement();
+            rs = statement.executeQuery("SELECT idAccounts, userName, password FROM mydb.accounts ma WHERE ma.email='" + email + "'");
+            while (rs.next()) {
+                id = rs.getInt("idAccounts");
+                accName = rs.getString("userName");
+                storedPW = rs.getString("password");
+                
+            }
+
         } catch (SQLException ex) {
             System.err.println("SQLException: " + ex.getMessage());
             System.err.println("SQLState: " + ex.getSQLState());
             System.err.println("VendorError: " + ex.getErrorCode());
+
         } finally {
             if (rs != null) {
                 try {
@@ -155,8 +155,6 @@ public class Login extends HttpServlet {
 
         }
         try {
-            debugbuff+="right befor the check on the 2 hashes ";
-            debugbuff+=hashPW(buffPW, makeSalt(id));
             if (storedPW.equals(hashPW(buffPW, makeSalt(id)))) {
                 retv = true;
             }
