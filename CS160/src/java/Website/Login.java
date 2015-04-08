@@ -33,10 +33,10 @@ public class Login extends HttpServlet {
 
     //using this for the salt may need to be something else
     //like the password file a file for the init random gen
-
     private int id;
     private String accName;
-     /**
+
+    /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
@@ -50,6 +50,8 @@ public class Login extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            Hasher debugHash =new Hasher();
+            
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             String name = ("([A-Z]|[a-z])[a-z]*");
@@ -57,55 +59,22 @@ public class Login extends HttpServlet {
             String emailRegx = name + lastname + "@sjsu.edu";
 
             if (email.matches(emailRegx)) {
-                //  System.out.println("email is not : " + email);
-                //System.out.println("password is not :" + password); 
-                System.out.println("authUser = " + authUser(email, password));
                 if (authUser(email, password)) {
-                    /*
-                    out.println("<!DOCTYPE html>");
-                    out.println("<html>");
-                    out.println("<head>");
-                    out.println("<title>Servlet Login</title>");
-                    out.println("</head>");
-                    out.println("<body>");
-                    out.println("<h1>email is a sjsu email <h1>");
-                    out.println("<h1>Servlet Login at " + request.getContextPath() + "</h1>");
-                    out.println("<h2> account Name= " + accName + "</h2>");
-                    out.println("<h2> email= " + email + "</h2>");
-                    //this is bad but is here for debug REMOVE at later point
-                    out.println("<h2> password= " + hashPW(password, makeSalt(id)) + "</h2>");
-                    out.println("<h2>This is a vaild user</h2>");
-                    out.println("</body>");
-                    out.println("</html>");
-                    //response.sendRedirect("loginconfirm.html");
-                    */
-                    
-                     request.setAttribute("message", "email is a sjsu email"); // This will be available as ${message}
+                    /**
+                     debug code
+                     */
+                    debugHash.calcuHash(password, id);
+                    /**
+                     debug code
+                     */
+                    request.setAttribute("message", "email is a sjsu email"); // This will be available as ${message}
                     request.setAttribute("message1", "Servlet Login at " + request.getContextPath());
                     request.setAttribute("message2", "account Name= " + accName);
                     request.setAttribute("message3", " email= " + email);
-                    request.setAttribute("message4", "password= " + hashPW(password, makeSalt(id)));
+                    request.setAttribute("message4", "password= " + debugHash.getHashedpwString());
                     request.setAttribute("message5", "This is a vaild user");
                     request.getRequestDispatcher("loginconfirm.jsp").forward(request, response);
-                    
-                }else{
-                    /*
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Servlet Login</title>");
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<h1> bad authUser <h1>");
-                out.println("<h1>Servlet Login at " + request.getContextPath() + "</h1>");
-                out.println("<h2> email= " + email + "</h2>");
-                out.println("<h2> password= " + password + "</h2>");
-                out.println("<h2> hashedpassword= " + hashPW(password, makeSalt(id)) + "</h2>");
-                out.println("<h2> debugbuff="+debugbuff+"</h2>");
-                out.println("</body>");
-                out.println("</html>");
-                    */
-                    
+                } else {
                     request.setAttribute("message", " bad authUser"); // This will be available as ${message}
                     request.setAttribute("message1", "Servlet Login at " + request.getContextPath());
                     request.setAttribute("message2", "email= " + email);
@@ -113,36 +82,18 @@ public class Login extends HttpServlet {
                     request.getRequestDispatcher("loginfail.jsp").forward(request, response);
                 }
             } else {
-                /*
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Servlet Login</title>");
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<h1> bad email adress:email adress is not a sjsu email <h1>");
-                out.println("<h1>Servlet Login at " + request.getContextPath() + "</h1>");
-                out.println("<h2> email= " + email + "</h2>");
-                out.println("<h2> password= " + password + "</h2>");
-                out.println("</body>");
-                out.println("</html>");
-                //response.sendRedirect("loginconfirm.html");
-                */
-                
                 request.setAttribute("message", "bad email adress:email adress is not a sjsu email"); // This will be available as ${message}
                 request.setAttribute("message1", "Servlet Login at " + request.getContextPath());
                 request.setAttribute("message2", "email= " + email);
                 request.setAttribute("message3", "password= " + password);
                 request.getRequestDispatcher("loginfail.jsp").forward(request, response);
-                
+
             }
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     private boolean authUser(String email, String password) {
-        
+
         boolean retv = false;
         String storedPW = "";
         String buffPW = password;
@@ -159,7 +110,7 @@ public class Login extends HttpServlet {
                 id = rs.getInt("idAccounts");
                 accName = rs.getString("userName");
                 storedPW = rs.getString("password");
-                
+
             }
 
         } catch (SQLException ex) {
@@ -185,45 +136,13 @@ public class Login extends HttpServlet {
 
         }
             //The check for valid user by checking the stored password with the new user given password.
-            //planing on changing this to use my hasher class
-            hser.calcuHash(buffPW, id);
-            System.out.println("hasher version of hashedpw = "+hser.getHashedpwString());
-            if (storedPW.equals(hser.getHashedpwString())) {
-                retv = true;
-            }
+        //planing on changing this to use my hasher class
+        hser.calcuHash(buffPW, id);
+        System.out.println("hasher version of hashedpw = " + hser.getHashedpwString());
+        if (storedPW.equals(hser.getHashedpwString())) {
+            retv = true;
+        }
         return retv;
-    }
-
-    private String bToHex(byte[] input) {
-        Formatter fmat = new Formatter();
-        for (int i = 0; i < input.length; i++) {
-            fmat.format("%02x", input[i]);
-
-        }
-        return fmat.toString();
-    }
-
-    private byte[] makeSalt(int id) {
-        SecureRandom sr = new SecureRandom(ByteBuffer.allocate(64).putInt(id).array());
-        byte[] salt = new byte[64];
-        sr.nextBytes(salt);
-        return salt;
-    }
-
-    private String hashPW(String pw, byte[] salt) throws NoSuchAlgorithmException {
-        MessageDigest sha512 = MessageDigest.getInstance("SHA-512");
-        sha512.update(salt);
-        sha512.update(pw.getBytes(), 0, pw.length());
-        byte[] hashedpassword = sha512.digest();
-
-        for (int i = 0; i < 100000; i++) {
-            sha512.update(salt);
-            sha512.update(hashedpassword, 0, hashedpassword.length);
-            hashedpassword = sha512.digest();
-        }
-
-        sha512.reset();
-        return bToHex(hashedpassword);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
