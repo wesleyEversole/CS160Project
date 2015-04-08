@@ -7,6 +7,11 @@ package Website;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -62,9 +67,61 @@ public class Registration extends HttpServlet {
     }
 
     private boolean addNewUser(String userName, String email, String password) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
         //will handle the db stuff
         //might move the hashing stuff to another class to be called here *still don't know at this momment* 
+        //boolean retv = false;
+       // String storedPW = "";
+       // String buffPW = password;
+        Database db = new Database();
+        Hasher hser = new Hasher();
+        Statement statement = null;
+        ResultSet rs = null;
+        String insertToAccount="INSERT INTO `mydb`.`accounts` (`userName`, `email`) VALUES (?, ?);";
+        //forlater use
+
+        try (Connection con = db.mySQLdbconnect()) {
+            statement = con.prepareStatement(insertToAccount);
+           //statement.setString(1,"test");
+           //statement.setString(2,"test");
+           // statement.executeUpdate();
+            while (rs.next()) {
+               // id = rs.getInt("idAccounts");
+               // accName = rs.getString("userName");
+             //   storedPW = rs.getString("password");
+
+            }
+            con.close();
+        } catch (SQLException ex) {
+            System.err.println("SQLException: " + ex.getMessage());
+            System.err.println("SQLState: " + ex.getSQLState());
+            System.err.println("VendorError: " + ex.getErrorCode());
+
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                }
+                rs = null;
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException ex) {
+                }
+                statement = null;
+            }
+
+        }
+        //The check for valid user by checking the stored password with the new user given password.
+        //planing on changing this to use my hasher class
+        //hser.calcuHash(buffPW, id);
+        System.out.println("hasher version of hashedpw = " + hser.getHashedpwString());
+//        if (storedPW.equals(hser.getHashedpwString())) {
+//            retv = true;
+//        }
+        return false;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
