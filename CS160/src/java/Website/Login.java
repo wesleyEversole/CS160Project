@@ -74,7 +74,7 @@ public class Login extends HttpServlet {
                     out.println("<h2>This is a vaild user</h2>");
                     out.println("</body>");
                     out.println("</html>");
-                    response.sendRedirect("loginconfirm.html");
+                    //response.sendRedirect("loginconfirm.html");
                 }else{
                 out.println("<!DOCTYPE html>");
                 out.println("<html>");
