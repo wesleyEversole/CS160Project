@@ -122,7 +122,7 @@ public class Login extends HttpServlet {
         ResultSet rs = null;
         //forlater use
         try {
-            try (Connection con = db.mySQLdbconnect()) {
+             Connection con = db.mySQLdbconnect();
                 statement = con.createStatement();
                 rs = statement.executeQuery("SELECT idAccounts, userName, password FROM mydb.accounts ma WHERE ma.email='"+email+"'");
                 debugbuff+="does the statment fail ";
@@ -132,7 +132,7 @@ public class Login extends HttpServlet {
                     storedPW = rs.getString("password");
                     debugbuff+="checking storedPW"+storedPW;
                 }
-            }
+            
         } catch (SQLException ex) {
             System.err.println("SQLException: " + ex.getMessage());
             System.err.println("SQLState: " + ex.getSQLState());
