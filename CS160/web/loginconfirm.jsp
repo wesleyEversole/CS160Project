@@ -14,7 +14,7 @@
 http-equiv="Refresh"
 content="5; url=homepage.html">
   
-  <title>San Jose State University Forum - Login Failed</title>
+  <title>San Jose State University Forum - Login Successful</title>
     <link rel="stylesheet" href="css/style.css" media="screen" type="text/css" />
 
 </head>
