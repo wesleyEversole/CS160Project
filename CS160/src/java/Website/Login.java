@@ -147,6 +147,7 @@ public class Login extends HttpServlet {
         String storedPW = "";
         String buffPW = password;
         Database db = new Database();
+        Hasher hser = new Hasher();
         Statement statement = null;
         ResultSet rs = null;
         //forlater use
@@ -183,15 +184,13 @@ public class Login extends HttpServlet {
             }
 
         }
-        try {
             //The check for valid user by checking the stored password with the new user given password.
             //planing on changing this to use my hasher class
-            if (storedPW.equals(hashPW(buffPW, makeSalt(id)))) {
+            hser.calcuHash(buffPW, id);
+            System.out.println("hasher version of hashedpw = "+hser.getHashedpwString());
+            if (storedPW.equals(hser.getHashedpwString())) {
                 retv = true;
             }
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
         return retv;
     }
 

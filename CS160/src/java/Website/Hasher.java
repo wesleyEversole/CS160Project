@@ -20,16 +20,16 @@ import java.util.logging.Logger;
 public class Hasher {
    private byte[] hashedpw;
    private byte[] salt;
-
-    public Hasher(String password,int seed) {
-       makeSalt(seed);
+   public Hasher() {    
+    }
+    public void calcuHash(String password,int seed){
+           makeSalt(seed);
        try {
            hashPW(password, salt);
        } catch (NoSuchAlgorithmException ex) {
            Logger.getLogger(Hasher.class.getName()).log(Level.SEVERE, null, ex);
        }
-        
-    }
+    } 
         private String bToHex(byte[] input) {
         Formatter fmat = new Formatter();
         for (int i = 0; i < input.length; i++) {
