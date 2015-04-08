@@ -43,8 +43,8 @@ public class Login extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            Hasher debugHash =new Hasher();
-            
+            Hasher debugHash = new Hasher();
+
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             String name = ("([A-Z]|[a-z])[a-z]*");
@@ -54,11 +54,11 @@ public class Login extends HttpServlet {
             if (email.matches(emailRegx)) {
                 if (authUser(email, password)) {
                     /**
-                     debug code
+                     * debug code
                      */
                     debugHash.calcuHash(password, id);
                     /**
-                     debug code
+                     * debug code
                      */
                     request.setAttribute("message", "email is a sjsu email"); // This will be available as ${message}
                     request.setAttribute("message1", "Servlet Login at " + request.getContextPath());
@@ -95,8 +95,8 @@ public class Login extends HttpServlet {
         Statement statement = null;
         ResultSet rs = null;
         //forlater use
-        try {
-            Connection con = db.mySQLdbconnect();
+
+        try (Connection con = db.mySQLdbconnect()) {
             statement = con.createStatement();
             rs = statement.executeQuery("SELECT idAccounts, userName, password FROM mydb.accounts ma WHERE ma.email='" + email + "'");
             while (rs.next()) {
@@ -105,7 +105,7 @@ public class Login extends HttpServlet {
                 storedPW = rs.getString("password");
 
             }
-
+            con.close();
         } catch (SQLException ex) {
             System.err.println("SQLException: " + ex.getMessage());
             System.err.println("SQLState: " + ex.getSQLState());
@@ -128,7 +128,7 @@ public class Login extends HttpServlet {
             }
 
         }
-            //The check for valid user by checking the stored password with the new user given password.
+        //The check for valid user by checking the stored password with the new user given password.
         //planing on changing this to use my hasher class
         hser.calcuHash(buffPW, id);
         System.out.println("hasher version of hashedpw = " + hser.getHashedpwString());
