@@ -185,6 +185,7 @@ public class Login extends HttpServlet {
         }
         try {
             //The check for valid user by checking the stored password with the new user given password.
+            //planing on changing this to use my hasher class
             if (storedPW.equals(hashPW(buffPW, makeSalt(id)))) {
                 retv = true;
             }
