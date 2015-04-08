@@ -61,6 +61,7 @@ public class Login extends HttpServlet {
                 //System.out.println("password is not :" + password); 
                 System.out.println("authUser = " + authUser(email, password));
                 if (authUser(email, password)) {
+                    /*
                     out.println("<!DOCTYPE html>");
                     out.println("<html>");
                     out.println("<head>");
@@ -76,23 +77,44 @@ public class Login extends HttpServlet {
                     out.println("<h2>This is a vaild user</h2>");
                     out.println("</body>");
                     out.println("</html>");
-                    response.sendRedirect("loginconfirm.html");
-                } else {
-                    out.println("<!DOCTYPE html>");
-                    out.println("<html>");
-                    out.println("<head>");
-                    out.println("<title>Servlet Login</title>");
-                    out.println("</head>");
-                    out.println("<body>");
-                    out.println("<h1> bad authUser <h1>");
-                    out.println("<h1>Servlet Login at " + request.getContextPath() + "</h1>");
-                    out.println("<h2> email= " + email + "</h2>");
-                    out.println("<h2> password= " + password + "</h2>");
-                    out.println("<h2> hashedpassword= " + hashPW(password, makeSalt(id)) + "</h2>");
-                    out.println("</body>");
-                    out.println("</html>");
+                    //response.sendRedirect("loginconfirm.html");
+                    */
+                    
+                     request.setAttribute("message", "email is a sjsu email"); // This will be available as ${message}
+                    request.setAttribute("message1", "Servlet Login at " + request.getContextPath());
+                    request.setAttribute("message2", "account Name= " + accName);
+                    request.setAttribute("message3", " email= " + email);
+                    request.setAttribute("message4", "password= " + hashPW(password, makeSalt(id)));
+                    request.setAttribute("message5", "This is a vaild user");
+                    request.getRequestDispatcher("loginconfirm.jsp").forward(request, response);
+                    
+                }else{
+                    /*
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<title>Servlet Login</title>");
+                out.println("</head>");
+                out.println("<body>");
+                out.println("<h1> bad authUser <h1>");
+                out.println("<h1>Servlet Login at " + request.getContextPath() + "</h1>");
+                out.println("<h2> email= " + email + "</h2>");
+                out.println("<h2> password= " + password + "</h2>");
+                out.println("<h2> hashedpassword= " + hashPW(password, makeSalt(id)) + "</h2>");
+                out.println("<h2> debugbuff="+debugbuff+"</h2>");
+                out.println("</body>");
+                out.println("</html>");
+                    */
+                    
+                     request.setAttribute("message", " bad authUser"); // This will be available as ${message}
+                    request.setAttribute("message1", "Servlet Login at " + request.getContextPath());
+                    request.setAttribute("message2", "email= " + email);
+                    request.setAttribute("message3", "password= " + password);
+                    request.setAttribute("message4", "debugbuff=" + debugbuff);
+                    request.getRequestDispatcher("loginfail.jsp").forward(request, response);
                 }
             } else {
+                /*
                 out.println("<!DOCTYPE html>");
                 out.println("<html>");
                 out.println("<head>");
@@ -106,6 +128,15 @@ public class Login extends HttpServlet {
                 out.println("</body>");
                 out.println("</html>");
                 //response.sendRedirect("loginconfirm.html");
+                */
+                
+                request.setAttribute("message", "bad email adress:email adress is not a sjsu email"); // This will be available as ${message}
+                request.setAttribute("message1", "Servlet Login at " + request.getContextPath());
+                request.setAttribute("message2", "email= " + email);
+                request.setAttribute("message3", "password= " + password);
+                request.setAttribute("message4", "debugbuff=" + debugbuff);
+                request.getRequestDispatcher("loginfail.jsp").forward(request, response);
+                
             }
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
