@@ -106,11 +106,10 @@ public class Login extends HttpServlet {
                 out.println("</html>");
                     */
                     
-                     request.setAttribute("message", " bad authUser"); // This will be available as ${message}
+                    request.setAttribute("message", " bad authUser"); // This will be available as ${message}
                     request.setAttribute("message1", "Servlet Login at " + request.getContextPath());
                     request.setAttribute("message2", "email= " + email);
                     request.setAttribute("message3", "password= " + password);
-                    request.setAttribute("message4", "debugbuff=" + debugbuff);
                     request.getRequestDispatcher("loginfail.jsp").forward(request, response);
                 }
             } else {
@@ -134,7 +133,6 @@ public class Login extends HttpServlet {
                 request.setAttribute("message1", "Servlet Login at " + request.getContextPath());
                 request.setAttribute("message2", "email= " + email);
                 request.setAttribute("message3", "password= " + password);
-                request.setAttribute("message4", "debugbuff=" + debugbuff);
                 request.getRequestDispatcher("loginfail.jsp").forward(request, response);
                 
             }
