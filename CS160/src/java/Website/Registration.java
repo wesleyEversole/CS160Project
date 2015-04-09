@@ -52,6 +52,16 @@ public class Registration extends HttpServlet {
                 }
             } else {
                 //reject the passwords, might be posible to do this at the html level
+                /* TEMPLATE FOR DISPLAYING THE JSP
+                request.setAttribute("message", "email is a sjsu email"); // This will be available as ${message}
+                    request.setAttribute("message1", "Servlet Register at " + request.getContextPath());
+                    request.setAttribute("message2", "account Name= " + accName);
+                    request.setAttribute("message3", " email= " + email);
+                    request.setAttribute("message4", "password= " + debugHash.getHashedpwString());
+                    request.setAttribute("message5", "STRING!!!");
+                    request.getRequestDispatcher("registerconfirm.jsp").forward(request, response);
+                */
+                
             }
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
