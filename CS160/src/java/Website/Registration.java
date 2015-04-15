@@ -76,40 +76,54 @@ public class Registration extends HttpServlet {
         }
     }
 
-    private boolean addNewUser(String userName, String email, String password) {
+       private boolean addNewUser(String userName, String email, String password) {
 
         //will handle the db stuff
         //might move the hashing stuff to another class to be called here *still don't know at this momment* 
-        //boolean retv = false;
-        // String storedPW = "";
-        // String buffPW = password;
         Database db = new Database();
         Hasher hser = new Hasher();
         PreparedStatement statement = null;
         ResultSet rs = null;
-        int bufferId;
+        int bufferId=-1;
         String bufferAcnName;
-        String sqlQuery = "INSERT INTO `mydb`.`accounts` (`userName`, `email`) VALUES (?, ?);";
-        //forlater use
+        boolean retv = false;
+        /*
+        +++++++++++SQL QUERY STRINGS+++++++++++
+        */
+        String sqlInsertQuery = "INSERT INTO `mydb`.`accounts` (`userName`, `email`) VALUES (?, ?);";
+        String sqlSelectQuery = "SELECT idAccounts, userName FROM mydb.accounts WHERE email=?";
+        String sqlUpdateQuery = "UPDATE `mydb`.`accounts` SET `password`=? WHERE `idAccounts`=?";
+        /*
+        +++++++++++SQL QUERY STRINGS+++++++++++
+        */
+         //forlater use
 
         try (Connection con = db.mySQLdbconnect()) {
-            statement = con.prepareStatement(sqlQuery);
+            statement = con.prepareStatement(sqlInsertQuery);
             statement.setString(1, userName);
             statement.setString(2, email);
             if (statement.executeUpdate() == 1) {
                 //query is not complete
-                sqlQuery="SELECT idAccounts, userName FROM mydb.accounts WHERE email=?";
+                //retv=true;
                 // adding a SQL call to find the ID of the account
-                statement= con.prepareStatement(sqlQuery);
+                statement = con.prepareStatement(sqlSelectQuery);
                 statement.setString(1, email);
-                statement.executeUpdate();
+                rs=statement.executeQuery();
                 //might need to add commits where ever I connect to the data base
-                con.commit();
+                //con.commit();
                 while (rs.next()) {
                     bufferId = rs.getInt("idAccounts");
                     bufferAcnName = rs.getString("userName");
-
+                    System.out.println("bufferId = "+bufferId);
+                    System.out.println("bufferName = "+bufferAcnName);
                 }
+               hser.calcuHash(password, bufferId);
+               statement = con.prepareStatement(sqlUpdateQuery);
+               statement.setString(1, hser.getHashedpwString());
+               statement.setInt(2, bufferId);
+               if(statement.executeUpdate()==1){
+               retv=true;
+               }
             }
 
             con.close();
@@ -135,14 +149,8 @@ public class Registration extends HttpServlet {
             }
 
         }
-        //The check for valid user by checking the stored password with the new user given password.
-        //planing on changing this to use my hasher class
-        //hser.calcuHash(buffPW, id);
-        System.out.println("hasher version of hashedpw = " + hser.getHashedpwString());
-//        if (storedPW.equals(hser.getHashedpwString())) {
-//            retv = true;
-//        }
-        return false;
+        
+        return retv;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
