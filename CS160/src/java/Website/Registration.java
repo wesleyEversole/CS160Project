@@ -39,10 +39,10 @@ public class Registration extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             //might change to User Name
-            String userName = request.getParameter("usernName");
+            String userName = request.getParameter("userName");
             String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            String passwordConf = request.getParameter("passwordConfirmation");
+            String password = request.getParameter("pass");
+            String passwordConf = request.getParameter("vpass");
             if (password.equals(passwordConf)) {
                 //process data 
                 if (addNewUser(userName, email, password)) {
