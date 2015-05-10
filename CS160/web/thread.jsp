@@ -1,5 +1,5 @@
 <%-- 
-    Document   : thread
+    Document   : Each threads that users already made
     Created on : May 10, 2015, 3:18:03 AM
     Author     : Jason
 --%>
@@ -14,7 +14,7 @@
     <body>
         <div id="menu">
             <ul>
-                <a href="http://www.google.com">Home</a> • <a href="http://www.google.com">My Account</a> • <a href="http://www.google.com">Create Forum</a> • <a href="http://www.google.com">Contact Us</a>
+                <a href="homepage.html">Home</a> • <a href="http://www.google.com">My Account</a> • <a href="http://www.google.com">Create Forum</a> • <a href="http://www.google.com">Contact Us</a>
             </ul>            
      </div>
         
