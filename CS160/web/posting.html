@@ -1,11 +1,26 @@
 <!--Posting - use for writing post-->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Write a Post</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>TODO write content</div>
+        <div>
+            <form action="posting" method="post">
+                <select name="Topic">
+                    <option value="1">Community - General Discussion</option>
+                    <option value="2">Community - SJSU News</option>
+                    <option value="3">What's Up? - Non-SJSU News</option>
+                    <option value="4">What's Up? - Need To Know </option>
+                    <option value="5">What's Up? - Internship</option>
+                </select>
+                <br>
+                <input type="text" name="title" value="Title of this post" maxlength="30">                
+                <br>
+                <textarea rows="10" cols="50">Type your content here.</textarea> 
+            </form> 
+
+        </div>
     </body>
 </html>
