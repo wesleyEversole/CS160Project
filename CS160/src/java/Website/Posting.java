@@ -34,13 +34,32 @@ public class Posting extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            String opcode = "0";
+            String option = request.getParameter("topic");
+            if (option.equals("0")) {
+
+            } else if (option.equals("1")) {
+                opcode = "1";
+            } else if (option.equals("2")) {
+                opcode = "2";
+            } else if (option.equals("3")) {
+                opcode = "3";
+            } else if (option.equals("4")) {
+                opcode = "4";
+            } else if (option.equals("5")) {
+                opcode = "5";
+            }
+
+            String title = request.getParameter("title");
+            String content = request.getParameter("content");
+
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Posting</title>");            
+            out.println("<title>Post test</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Posting at " + request.getContextPath() + "</h1>");
+            out.println("<h1> Op Code: " + opcode + "\nTitle: " + title + "\nContent: " + content + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }

@@ -8,7 +8,7 @@
     <body>
         <div>
             <form action="posting" method="post">
-                <select name="Topic">
+                <select name="topic">
                     <option value="1">Community - General Discussion</option>
                     <option value="2">Community - SJSU News</option>
                     <option value="3">What's Up? - Non-SJSU News</option>
@@ -18,7 +18,9 @@
                 <br>
                 <input type="text" name="title" value="Title of this post" maxlength="30">                
                 <br>
-                <textarea rows="10" cols="50">Type your content here.</textarea> 
+                <textarea name="content" rows="10" cols="50">Type your content here.</textarea> 
+                <br>
+                <input type ="submit" class="login login-submit" value="Posting">
             </form> 
 
         </div>
