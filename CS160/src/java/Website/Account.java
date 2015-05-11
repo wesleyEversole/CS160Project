@@ -7,6 +7,11 @@ package Website;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,9 +44,7 @@ public class Account extends HttpServlet {
             String passwordConf = request.getParameter("verPassword");
             
             if (password.equals(passwordConf)){
-                
-                
-                
+                 
                 
             } else {
                 
@@ -120,4 +123,126 @@ public class Account extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+private boolean userConfirm (String email, String password){
+    
+       int id=0;
+       boolean retv = false;
+        String storedPW = "";
+        String buffPW = password;
+        Database db = new Database();
+        Hasher hser = new Hasher();
+        Statement statement = null;
+        ResultSet rs = null;
+        //forlater use
+
+        try (Connection con = db.mySQLdbconnect()) {
+            statement = con.createStatement();
+            rs = statement.executeQuery("SELECT idAccounts,password FROM mydb.accounts ma WHERE ma.email='" + email + "'");
+            while (rs.next()) {
+                id = rs.getInt("idAccounts");
+                storedPW = rs.getString("password");
+            }
+            con.close();
+        } catch (SQLException ex) {
+            System.err.println("SQLException: " + ex.getMessage());
+            System.err.println("SQLState: " + ex.getSQLState());
+            System.err.println("VendorError: " + ex.getErrorCode());
+
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                }
+                rs = null;
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException ex) {
+                }
+                statement = null;
+            }
+
+        }
+        //The check for valid user by checking the stored password with the new user given password.
+        //planing on changing this to use my hasher class
+        hser.calcuHash(buffPW, id);
+        System.out.println("hasher version of hashedpw = " + hser.getHashedpwString());
+        if (storedPW.equals(hser.getHashedpwString())) {
+            retv = true;
+        }
+        return retv;
+    }
+
+private boolean updatePass (String email, String password){
+      //will handle the db stuff
+        //might move the hashing stuff to another class to be called here *still don't know at this momment* 
+        Database db = new Database();
+        Hasher hser = new Hasher();
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        int bufferId=-1;
+        String bufferAcnName;
+        boolean retv = false;
+        /*
+        +++++++++++SQL QUERY STRINGS+++++++++++
+        */
+        String sqlSelectQuery = "SELECT idAccounts, userName FROM mydb.accounts WHERE email=?";
+        String sqlUpdateQuery = "UPDATE `mydb`.`accounts` SET `password`=? WHERE `idAccounts`=?";
+        /*
+        +++++++++++SQL QUERY STRINGS+++++++++++
+        */
+         //forlater use
+
+        try (Connection con = db.mySQLdbconnect()) {
+                           //query is not complete
+                //retv=true;
+                // adding a SQL call to find the ID of the account
+                statement = con.prepareStatement(sqlSelectQuery);
+                statement.setString(1, email);
+                rs=statement.executeQuery();
+                //might need to add commits where ever I connect to the data base
+                //con.commit();
+                while (rs.next()) {
+                    bufferId = rs.getInt("idAccounts");
+                    bufferAcnName = rs.getString("userName");
+                    System.out.println("bufferId = "+bufferId);
+                    System.out.println("bufferName = "+bufferAcnName);
+                }
+               hser.calcuHash(password, bufferId);
+               statement = con.prepareStatement(sqlUpdateQuery);
+               statement.setString(1, hser.getHashedpwString());
+               statement.setInt(2, bufferId);
+               if(statement.executeUpdate()==1){
+               retv=true;
+               }
+               con.close();
+        } catch (SQLException ex) {
+            System.err.println("SQLException: " + ex.getMessage());
+            System.err.println("SQLState: " + ex.getSQLState());
+            System.err.println("VendorError: " + ex.getErrorCode());
+
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                }
+                rs = null;
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException ex) {
+                }
+                statement = null;
+            }
+
+        }
+        
+        return retv;
+    
+    return retv;
+}
 }
