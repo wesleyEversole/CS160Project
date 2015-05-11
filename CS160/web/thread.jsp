@@ -1,6 +1,5 @@
 <%-- 
     Document   : Each threads that users already made
-    Created on : May 10, 2015, 3:18:03 AM
     Author     : Jason
 --%>
 
