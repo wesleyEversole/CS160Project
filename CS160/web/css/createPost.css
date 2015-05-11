@@ -1,0 +1,37 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : May 11, 2015, 1:14:25 AM
+    Author     : Jason
+*/
+
+body {
+  background: url(http://upload.wikimedia.org/wikipedia/en/thumb/2/27/San_Jose_State_Spartans_Logo.svg/996px-San_Jose_State_Spartans_Logo.svg.png) no-repeat center fixed; 
+}
+
+#message{
+    min-height: 200px;
+    background-color: white;
+    font-size: large;
+}
+
+th,td {
+       text-align: left;
+}
+
+menu{ color: white; float: left; list-style-type: none; margin: 0; padding: 0; background: none; border-width: 0; }
+
+h1{
+    font-family: "Verdana", Geneva, sans-serif;
+    color: white;
+    text-align: left;
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+}
+
+textarea,input {
+   font-size: 15px;
+   font-family: Arial;
+} 
