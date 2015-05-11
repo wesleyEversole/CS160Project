@@ -1,6 +1,6 @@
 <%-- 
     Document   : Each threads that users already made
-    Author     : Jason
+    Author     : Jason Ng
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
