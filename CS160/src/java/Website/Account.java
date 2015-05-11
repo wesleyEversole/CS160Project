@@ -44,7 +44,16 @@ public class Account extends HttpServlet {
             String passwordConf = request.getParameter("verPassword");
             
             if (password.equals(passwordConf)){
-                 
+                    /* TODO output your page here. You may use following sample code. */            
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet Account</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Successful p/w change</h1>");
+            out.println("</body>");
+            out.println("</html>");
                 
             } else {
                 
@@ -61,26 +70,6 @@ public class Account extends HttpServlet {
                 
             }
             
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            /* TODO output your page here. You may use following sample code. */            
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Account</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Account at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
         }
     }
 
@@ -183,12 +172,11 @@ private boolean updatePass (String email, String password){
         PreparedStatement statement = null;
         ResultSet rs = null;
         int bufferId=-1;
-        String bufferAcnName;
         boolean retv = false;
         /*
         +++++++++++SQL QUERY STRINGS+++++++++++
         */
-        String sqlSelectQuery = "SELECT idAccounts, userName FROM mydb.accounts WHERE email=?";
+        String sqlSelectQuery = "SELECT idAccounts FROM mydb.accounts WHERE email=?";
         String sqlUpdateQuery = "UPDATE `mydb`.`accounts` SET `password`=? WHERE `idAccounts`=?";
         /*
         +++++++++++SQL QUERY STRINGS+++++++++++
@@ -206,9 +194,7 @@ private boolean updatePass (String email, String password){
                 //con.commit();
                 while (rs.next()) {
                     bufferId = rs.getInt("idAccounts");
-                    bufferAcnName = rs.getString("userName");
                     System.out.println("bufferId = "+bufferId);
-                    System.out.println("bufferName = "+bufferAcnName);
                 }
                hser.calcuHash(password, bufferId);
                statement = con.prepareStatement(sqlUpdateQuery);
@@ -242,7 +228,5 @@ private boolean updatePass (String email, String password){
         }
         
         return retv;
-    
-    return retv;
 }
 }
