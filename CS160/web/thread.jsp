@@ -1,6 +1,9 @@
 <%-- 
     Document   : Each threads that users already made
     Author     : Jason Ng
+-------------------
+thread message | author
+-------------------
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -16,30 +19,45 @@
             <ul>
                 <a href="homepage.html">Home</a> • <a href="http://www.google.com">My Account</a> • <a href="http://www.google.com">Create Forum</a> • <a href="http://www.google.com">Contact Us</a>
             </ul>            
-     </div>
-        
-        <div>                
-         <p>${title1}</p>
-         <br>
-         <p>${author}</p>
-         <br>
-         <p>${message}</p>
-         <br>
         </div>
-        
+
         <div>                
-         Title
-         author
-         Message        
-        </div>        
-        <form>
+            <p>${title1}</p>
+            <br>
+            <p>${author}</p>
+            <br>
+            <p>${message}</p>
+            <br>
+            <p>${author1}</p>
+            <br>
+            <p>${message1}</p>
+            <br>
+        </div>
+
+        
+        <table>
+            <h1><font size="6">Title</font></h1>
+            <tr>
+                <th> <div id= author> Author </div></th>                
+            </tr>
+            <tr>
+                <td> <div id="message"> Message </div> </td>
+            </tr>
+            <tr>
+                <th> <div id= author>Author1 </div></th>                
+            </tr>
+            <tr>
+                <td> <div id="message"> Message1 </div> </td>
+            </tr>    
+        </table>
+            <br>
+        <form>   
             <h1>
                 Reply:
-                <br>
-                <textarea name="content" rows="10" cols="50">Type your content here.</textarea> 
+            </h1>
+                <textarea name="content" rows="8" cols="80">Type your content here.</textarea> 
                 <br>
                 <input type ="submit" class="login login-submit" value="Reply">
-            </h1>
-        </form>
+         </form>
     </body>
 </html>
