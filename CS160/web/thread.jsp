@@ -8,6 +8,7 @@ thread message | author
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -15,10 +16,13 @@ thread message | author
         <link rel="stylesheet" type="text/css" media="screen" href="css/thread.css">
     </head>
     <body>
+        <div id="header">
+            <h1><font size = "9">SJSU Forum</font></h1>
+        </div>
         <div id="menu">
-            <ul>
-                <a href="homepage.html">Home</a> • <a href="http://www.google.com">My Account</a> • <a href="http://www.google.com">Create Forum</a> • <a href="http://www.google.com">Contact Us</a>
-            </ul>            
+            <table align="center">
+                <tr><th><a href="homepage.html">Home</a> • <a href="http://www.google.com">My Account</a> • <a href="http://www.google.com">Create Forum</a> • <a href="http://www.google.com">Contact Us</a></th></tr>
+            </table>            
         </div>
 
         <div>                
@@ -35,8 +39,9 @@ thread message | author
         </div>
 
         
-        <table>
-            <h1><font size="6">Title</font></h1>
+        <h3 align="center"><font size = "6">Title</font></h3>
+        <table align="center">
+
             <tr>
                 <th> <div id= author> Author </div></th>                
             </tr>
