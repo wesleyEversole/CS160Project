@@ -38,38 +38,68 @@ public class Account extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
-            String email = request.getParameter("email");
-            String password = request.getParameter("newPassword");
-            String passwordConf = request.getParameter("verPassword");
-            
-            if (password.equals(passwordConf)){
-                    /* TODO output your page here. You may use following sample code. */            
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Account</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Successful p/w change</h1>");
-            out.println("</body>");
-            out.println("</html>");
-                
+
+            String email = "";
+            String password = "";
+            String passwordConf = "";
+
+            email = request.getParameter("email");
+            password = request.getParameter("newPassword");
+            passwordConf = request.getParameter("verPassword");
+
+            if (password.equals(passwordConf)) {
+                if (userConfirm(email, request.getParameter("curPassword"))) {
+                    if (updatePass(email, password)) {
+                        /* TODO output your page here. You may use following sample code. */
+                        out.println("<!DOCTYPE html>");
+                        out.println("<html>");
+                        out.println("<head>");
+                        out.println("<title>Servlet Account</title>");
+                        out.println("</head>");
+                        out.println("<body>");
+                        out.println("<h1>Successful p/w change</h1>");
+                        out.println("</body>");
+                        out.println("</html>");
+                    } else {
+                        //fail update
+                                /* TODO output your page here. You may use following sample code. */
+                        out.println("<!DOCTYPE html>");
+                        out.println("<html>");
+                        out.println("<head>");
+                        out.println("<title>Servlet Account</title>");
+                        out.println("</head>");
+                        out.println("<body>");
+                        out.println("<h1>Update p/w failed</h1>");
+                        out.println("</body>");
+                        out.println("</html>");
+                    }
+                } else {
+                    //Wrong P/W
+                            /* TODO output your page here. You may use following sample code. */
+                    out.println("<!DOCTYPE html>");
+                    out.println("<html>");
+                    out.println("<head>");
+                    out.println("<title>Servlet Account</title>");
+                    out.println("</head>");
+                    out.println("<body>");
+                    out.println("<h1>The password enter does not match the password in the system<br>or this email does not exist</h1>");
+                    out.println("</body>");
+                    out.println("</html>");
+                }
             } else {
-                
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Password mismatch</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Account at " + request.getContextPath() + "</h1>");
-            out.println("<h1> Password mismatch </h1>");
-            out.println("</body>");
-            out.println("</html>");
-                
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<title>Password mismatch</title>");
+                out.println("</head>");
+                out.println("<body>");
+                out.println("<h1>Servlet Account at " + request.getContextPath() + "</h1>");
+                out.println("<h1> Password mismatch </h1>");
+                out.println("</body>");
+                out.println("</html>");
+
             }
-            
+
         }
     }
 
@@ -112,10 +142,11 @@ public class Account extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-private boolean userConfirm (String email, String password){
-    
-       int id=0;
-       boolean retv = false;
+    /*Check to see if the current user password match system */
+    private boolean userConfirm(String email, String password) {
+
+        int id = 0;
+        boolean retv = false;
         String storedPW = "";
         String buffPW = password;
         Database db = new Database();
@@ -127,6 +158,8 @@ private boolean userConfirm (String email, String password){
         try (Connection con = db.mySQLdbconnect()) {
             statement = con.createStatement();
             rs = statement.executeQuery("SELECT idAccounts,password FROM mydb.accounts ma WHERE ma.email='" + email + "'");
+            System.out.println("++++++++++++++++++++++");
+            System.out.println(rs);
             while (rs.next()) {
                 id = rs.getInt("idAccounts");
                 storedPW = rs.getString("password");
@@ -164,46 +197,46 @@ private boolean userConfirm (String email, String password){
         return retv;
     }
 
-private boolean updatePass (String email, String password){
-      //will handle the db stuff
+    private boolean updatePass(String email, String password) {
+        //will handle the db stuff
         //might move the hashing stuff to another class to be called here *still don't know at this momment* 
         Database db = new Database();
         Hasher hser = new Hasher();
         PreparedStatement statement = null;
         ResultSet rs = null;
-        int bufferId=-1;
+        int bufferId = -1;
         boolean retv = false;
         /*
-        +++++++++++SQL QUERY STRINGS+++++++++++
-        */
+         +++++++++++SQL QUERY STRINGS+++++++++++
+         */
         String sqlSelectQuery = "SELECT idAccounts FROM mydb.accounts WHERE email=?";
         String sqlUpdateQuery = "UPDATE `mydb`.`accounts` SET `password`=? WHERE `idAccounts`=?";
         /*
-        +++++++++++SQL QUERY STRINGS+++++++++++
-        */
-         //forlater use
+         +++++++++++SQL QUERY STRINGS+++++++++++
+         */
+        //forlater use
 
         try (Connection con = db.mySQLdbconnect()) {
                            //query is not complete
-                //retv=true;
-                // adding a SQL call to find the ID of the account
-                statement = con.prepareStatement(sqlSelectQuery);
-                statement.setString(1, email);
-                rs=statement.executeQuery();
+            //retv=true;
+            // adding a SQL call to find the ID of the account
+            statement = con.prepareStatement(sqlSelectQuery);
+            statement.setString(1, email);
+            rs = statement.executeQuery();
                 //might need to add commits where ever I connect to the data base
-                //con.commit();
-                while (rs.next()) {
-                    bufferId = rs.getInt("idAccounts");
-                    System.out.println("bufferId = "+bufferId);
-                }
-               hser.calcuHash(password, bufferId);
-               statement = con.prepareStatement(sqlUpdateQuery);
-               statement.setString(1, hser.getHashedpwString());
-               statement.setInt(2, bufferId);
-               if(statement.executeUpdate()==1){
-               retv=true;
-               }
-               con.close();
+            //con.commit();
+            while (rs.next()) {
+                bufferId = rs.getInt("idAccounts");
+                System.out.println("bufferId = " + bufferId);
+            }
+            hser.calcuHash(password, bufferId);
+            statement = con.prepareStatement(sqlUpdateQuery);
+            statement.setString(1, hser.getHashedpwString());
+            statement.setInt(2, bufferId);
+            if (statement.executeUpdate() == 1) {
+                retv = true;
+            }
+            con.close();
         } catch (SQLException ex) {
             System.err.println("SQLException: " + ex.getMessage());
             System.err.println("SQLState: " + ex.getSQLState());
@@ -226,7 +259,7 @@ private boolean updatePass (String email, String password){
             }
 
         }
-        
+
         return retv;
-}
+    }
 }
