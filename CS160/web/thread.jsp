@@ -8,7 +8,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title> <p>${title}</p></title>
+        <title> ${title}</title>
+        <link rel="stylesheet" type="text/css" media="screen" href="css/thread.css">
     </head>
     <body>
         <div id="menu">
@@ -19,18 +20,26 @@
         
         <div>                
          <p>${title1}</p>
+         <br>
          <p>${author}</p>
-         <p>${message}</p>         
+         <br>
+         <p>${message}</p>
+         <br>
         </div>
         
-        
-        
+        <div>                
+         Title
+         author
+         Message        
+        </div>        
         <form>
+            <h1>
                 Reply:
                 <br>
                 <textarea name="content" rows="10" cols="50">Type your content here.</textarea> 
                 <br>
                 <input type ="submit" class="login login-submit" value="Reply">
+            </h1>
         </form>
     </body>
 </html>

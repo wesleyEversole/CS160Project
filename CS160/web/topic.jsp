@@ -10,17 +10,24 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>${title}</title>
+        
+        <link rel="stylesheet" type="text/css" media="screen" href="css/forumtables.css">
     </head>
     <body>
-       <h1> <p>${title1}</p> </h1>
-       <br>
-       <div id="menu">
+        <h1> <p>${title1}</p> </h1>
+        <br>
+        <div id="menu">
             <ul>
                 <a href="homepage.html">Home</a> • <a href="http://www.google.com">My Account</a> • <a href="http://www.google.com">Create Forum</a> • <a href="http://www.google.com">Contact Us</a>
             </ul>
-       </div>
-       <br>
-       
+        </div>
+        <br>
+
+        <form action="posting.html">
+            <input type="submit" value="Create a thread">
+        </form>
+        <br>
+        
         <table align="center">
             <tr>
                 <th> Title: </th>
@@ -29,11 +36,11 @@
             </tr>
             <!pull data from server here>
             <tr>
-               <td> <a href="thread.jsp">Thread1</a> </td>
-               <td> 0 topics<br>0 replies </td>
-               <td> <a href="http://www.google.com">Post Title</a><br>By <a href="http://www.google.com">Author</a><br>Some time ago </td>
+                <td> <a href="thread.jsp">Thread1</a> </td>
+                <td> 0 topics<br>0 replies </td>
+                <td> <a href="http://www.google.com">Post Title</a><br>By <a href="http://www.google.com">Author</a><br>Some time ago </td>
             </tr>
-                           
+
         </table>
     </body>
 </html>
