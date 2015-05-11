@@ -8,7 +8,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title> <p>${title}</p></title>
+        <title> ${title}</title>
+        <link rel="stylesheet" type="text/css" media="screen" href="css/thread.css">
     </head>
     <body>
         <div id="menu">
