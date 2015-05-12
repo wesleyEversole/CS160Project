@@ -51,53 +51,58 @@ public class Account extends HttpServlet {
                 if (userConfirm(email, request.getParameter("curPassword"))) {
                     if (updatePass(email, password)) {
                         /* TODO output your page here. You may use following sample code. */
-                        out.println("<!DOCTYPE html>");
-                        out.println("<html>");
-                        out.println("<head>");
-                        out.println("<title>Servlet Account</title>");
-                        out.println("</head>");
-                        out.println("<body>");
-                        out.println("<h1>Successful p/w change</h1>");
-                        out.println("</body>");
-                        out.println("</html>");
+//                        out.println("<!DOCTYPE html>");
+//                        out.println("<html>");
+//                        out.println("<head>");
+//                        out.println("<title>Servlet Account</title>");
+//                        out.println("</head>");
+//                        out.println("<body>");
+//                        out.println("<h1>Successful p/w change</h1>");
+//                        out.println("</body>");
+//                        out.println("</html>");
+                        request.getRequestDispatcher("accountUpdate.jsp").forward(request, response);
+                        
                     } else {
                         //fail update
                                 /* TODO output your page here. You may use following sample code. */
-                        out.println("<!DOCTYPE html>");
-                        out.println("<html>");
-                        out.println("<head>");
-                        out.println("<title>Servlet Account</title>");
-                        out.println("</head>");
-                        out.println("<body>");
-                        out.println("<h1>Update p/w failed</h1>");
-                        out.println("</body>");
-                        out.println("</html>");
+//                        out.println("<!DOCTYPE html>");
+//                        out.println("<html>");
+//                        out.println("<head>");
+//                        out.println("<title>Servlet Account</title>");
+//                        out.println("</head>");
+//                        out.println("<body>");
+//                        out.println("<h1>Update p/w failed</h1>");
+//                        out.println("</body>");
+//                        out.println("</html>");
+                        request.getRequestDispatcher("accountFail.jsp").forward(request, response);
                     }
                 } else {
                     //Wrong P/W
                             /* TODO output your page here. You may use following sample code. */
-                    out.println("<!DOCTYPE html>");
-                    out.println("<html>");
-                    out.println("<head>");
-                    out.println("<title>Servlet Account</title>");
-                    out.println("</head>");
-                    out.println("<body>");
-                    out.println("<h1>The password enter does not match the password in the system<br>or this email does not exist</h1>");
-                    out.println("</body>");
-                    out.println("</html>");
+//                    out.println("<!DOCTYPE html>");
+//                    out.println("<html>");
+//                    out.println("<head>");
+//                    out.println("<title>Servlet Account</title>");
+//                    out.println("</head>");
+//                    out.println("<body>");
+//                    out.println("<h1>The password enter does not match the password in the system<br>or this email does not exist</h1>");
+//                    out.println("</body>");
+//                    out.println("</html>");
+                      request.getRequestDispatcher("accountFail.jsp").forward(request, response);
                 }
             } else {
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Password mismatch</title>");
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<h1>Servlet Account at " + request.getContextPath() + "</h1>");
-                out.println("<h1> Password mismatch </h1>");
-                out.println("</body>");
-                out.println("</html>");
-
+//                out.println("<!DOCTYPE html>");
+//                out.println("<html>");
+//                out.println("<head>");
+//                out.println("<title>Password mismatch</title>");
+//                out.println("</head>");
+//                out.println("<body>");
+//                out.println("<h1>Servlet Account at " + request.getContextPath() + "</h1>");
+//                out.println("<h1> Password mismatch </h1>");
+//                out.println("</body>");
+//                out.println("</html>");
+//
+                  request.getRequestDispatcher("accountMismatch.jsp").forward(request, response);
             }
 
         }
