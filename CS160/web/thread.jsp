@@ -24,35 +24,21 @@ thread message | author
                 <tr><th><a href="homepage.html">Home</a> • <a href="account.html">My Account</a> • <a href="http://www.google.com">Contact Us</a></th></tr>
             </table>            
         </div>
-
-        <div>                
-            <p>${title1}</p>
-            <br>
-            <p>${author}</p>
-            <br>
-            <p>${message}</p>
-            <br>
-            <p>${author1}</p>
-            <br>
-            <p>${message1}</p>
-            <br>
-        </div>
-
         
-        <h3 align="center"><font size = "6">Title</font></h3>
+        <h3 align="center"><font size = "6">Title: ${title1}</font></h3>
         <table align="center">
 
             <tr>
-                <th> <div id= author> Author </div></th>                
+                <th> <div id= author> Author: ${author} </div></th>                
             </tr>
             <tr>
-                <td> <div id="message"> Message </div> </td>
+                <td> <div id="message">${message}</div> </td>
             </tr>
             <tr>
-                <th> <div id= author>Author1 </div></th>                
+                <th> <div id= author>Author: ${author} </div></th>                
             </tr>
             <tr>
-                <td> <div id="message"> Message1 </div> </td>
+                <td> <div id="message"> ${message} </div> </td>
             </tr>    
         </table>
             <br>

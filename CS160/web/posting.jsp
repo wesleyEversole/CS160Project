@@ -1,0 +1,44 @@
+<!--Posting - use for writing post-->
+<html>
+    <head>
+        <title>Write a Post</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" media="screen" href="css/forumtables.css">
+    </head>
+    <body>
+        <div id="header">
+            <h1><font size = "9">SJSU Forum</font></h1>
+        </div>
+        <div id="menu">
+            <table align="center">
+                <tr><th><a href="homepage.html">Home</a>  <a href="account.html">My Account</a>  <a href="http://www.google.com">Create Forum</a>  <a href="http://www.google.com">Contact Us</a></th></tr>
+            </table>            
+        </div>
+        <h3 align="center"><font size = "6">Create Post</font></h3>
+        <table align="center">
+        <div>
+            <form action="posting" method="post">
+                <tr><th><select align="center" name="topic">
+                    <option value="1">Community - General Discussion</option>
+                    <option value="2">Community - SJSU News</option>
+                    <option value="3">What's Up? - Non-SJSU News</option>
+                    <option value="4">What's Up? - Need To Know </option>
+                    <option value="5">What's Up? - Internship</option>
+                </select></th></tr>
+                <tr><th><input align="center" size="48" type="text" name="title" value="${title}" maxlength="50"></th></tr>
+                <tr><th><input align="center" size="40" type="text" name="username" value="!!!This username does not exist!!!" maxlength="50"></th></tr>
+                <tr><th><textarea name="content" rows="15" cols="100">${text}</textarea></th></tr> 
+                <tr><th><input type ="submit" class="login login-submit" value="Post"></th></tr>
+               <!-- <tr><th><input type ="submit" class="login login-submit" value="Preview"></th></tr> -->
+                <tr><th><input type ="submit" class="login login-submit" value="Cancel"></th></tr>       
+                         
+            </form> 
+           
+        </div>
+            
+        <form action="homepage.html">
+            <input type="submit" value="Cancel">
+        </form>
+    </body>
+</html>
