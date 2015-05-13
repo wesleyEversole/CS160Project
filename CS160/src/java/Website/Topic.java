@@ -57,9 +57,12 @@ public class Topic extends HttpServlet {
                 title = "Internship";
             }
              
-             ArrayList<ForumPosts> temp = getForumPosts(op);
-             
+             /* suppose to handle generate
+              ArrayList<ForumPosts> temp = getForumPosts(op);              
+              request.setAttribute("ForumPosts", temp);
               request.setAttribute("no",temp.size());
+              */
+              
               request.setAttribute("title", title);
               request.setAttribute("title1", title);
               request.getRequestDispatcher("topic.jsp").forward(request, response);

@@ -39,7 +39,7 @@
                 <td> 0 topics<br>0 replies </td>
                 <td> <a href="http://www.google.com">Post Title</a><br>By <a href="http://www.google.com">Author</a><br>Some time ago </td>
             </tr>
-
+<!--not working
             <c:forEach begin="1" end= "${no}" step="1" varStatus="loopCounter"
                        value="${ForumPosts}" var="ForumPosts">
                 <tr>
@@ -54,7 +54,7 @@
                 </td>                
                 </tr>
             </c:forEach>
-
+-->
         </table>
     </body>
 </html>
