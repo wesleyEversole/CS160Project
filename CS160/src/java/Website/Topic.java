@@ -71,7 +71,7 @@ public class Topic extends HttpServlet {
         ArrayList retv = new ArrayList<>();
         int bufferId;
         Date bufferDate;
-        String bufferTopic;
+        int bufferTopic;
         String bufferTitle;
         Blob bufferContent;
         int bufferNumberOfReply;
@@ -100,11 +100,11 @@ public class Topic extends HttpServlet {
             while (rs.next()) {
                 bufferId = rs.getInt("idPost");
                 bufferDate = rs.getDate("date");
-                bufferTopic = rs.getString("topic");
+                bufferTopic = rs.getInt("topic");
                 bufferContent = rs.getBlob("content");
                 bufferTitle = rs.getString("title");
                 bufferNumberOfReply = rs.getInt("numberOfReply");
-                retv.add(new ForumPosts(bufferId, bufferDate, topic,bufferTitle, bufferContent,bufferNumberOfReply));
+                retv.add(new ForumPosts(bufferId, bufferDate,bufferTopic,bufferTitle, bufferContent,bufferNumberOfReply));
                 
                 // bufferAcnName = rs.getString("userName");
                 System.out.println("bufferId = " + bufferId);
