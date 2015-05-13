@@ -180,7 +180,7 @@ public class Posting extends HttpServlet {
         return id;
     }
 
-    public boolean makePost(String user,String title, String content,String opCode) throws SQLException {
+    public boolean makePost(String user,String title, String content,String opCode) {
         boolean retv = false;       
         Blob bufferContent ;        
         Database db = new Database();  
