@@ -36,8 +36,10 @@ public class Posting extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             String opcode = "0";
             String option = request.getParameter("topic");
+            //just need these parts of data
             String content = request.getParameter("content");
             String username = request.getParameter("username");
+            //just have the user inpute their username
             if (option.equals("0")) {
 
             } else if (option.equals("1")) {
