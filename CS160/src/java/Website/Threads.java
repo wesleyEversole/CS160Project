@@ -60,6 +60,7 @@ public class Threads extends HttpServlet {
         String bufferTitle;
         Blob bufferContent;
         int bufferNumberOfReply;
+        String bufferAuthor;
         Database db = new Database();
         PreparedStatement statement = null;
         ResultSet rs = null;
@@ -87,9 +88,9 @@ public class Threads extends HttpServlet {
                 bufferDate = rs.getDate("date");
                 bufferTopic = rs.getInt("topic");
                 bufferContent = rs.getBlob("content");
-                bufferTitle = rs.getString("title");
-                bufferNumberOfReply = rs.getInt("numberOfReply");
-                retv=new ForumPosts(bufferId, bufferDate,bufferTopic,bufferTitle, bufferContent,bufferNumberOfReply);
+                bufferTitle = rs.getString("title");                
+                bufferAuthor = rs.getString("author");
+                retv=new ForumPosts(bufferId, bufferDate,bufferTopic,bufferTitle, bufferContent,bufferAuthor);
                 
                 // bufferAcnName = rs.getString("userName");
                 System.out.println("bufferId = " + bufferId);

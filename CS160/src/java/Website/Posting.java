@@ -206,7 +206,7 @@ public class Posting extends HttpServlet {
             statement = con.prepareStatement(sqlInsertQuery);
             statement.setBlob(1, bufferContent);
             statement.setString(2, title);
-            //statement.setInt(3, opCode);
+            statement.setInt(3, Integer.parseInt(opCode));
             statement.setString(4, user);
             if(statement.executeUpdate()==1){
             retv = true;

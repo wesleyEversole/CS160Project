@@ -74,6 +74,7 @@ public class Topic extends HttpServlet {
         int bufferTopic;
         String bufferTitle;
         Blob bufferContent;
+        String bufferAuthor;
         int bufferNumberOfReply;
         Database db = new Database();
         PreparedStatement statement = null;
@@ -102,9 +103,9 @@ public class Topic extends HttpServlet {
                 bufferDate = rs.getDate("date");
                 bufferTopic = rs.getInt("topic");
                 bufferContent = rs.getBlob("content");
-                bufferTitle = rs.getString("title");
-                bufferNumberOfReply = rs.getInt("numberOfReply");
-                retv.add(new ForumPosts(bufferId, bufferDate,bufferTopic,bufferTitle, bufferContent,bufferNumberOfReply));
+                bufferTitle = rs.getString("title");                
+                bufferAuthor = rs.getString("author");
+                retv.add(new ForumPosts(bufferId, bufferDate,bufferTopic,bufferTitle, bufferContent,bufferAuthor));
                 
                 // bufferAcnName = rs.getString("userName");
                 System.out.println("bufferId = " + bufferId);

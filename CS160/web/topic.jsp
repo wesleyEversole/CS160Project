@@ -30,8 +30,8 @@
         <table align="center">
             <tr>
                 <th> Title: </th>
-                <th> Hits: </th>
-                <th> Last Post By:</th>
+                <th> Created By:</th>
+                <th> Date:</th>
             </tr>
             <!pull data from server here>
             <tr>

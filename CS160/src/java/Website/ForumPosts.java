@@ -21,16 +21,16 @@ public class ForumPosts {
     private final Date date;
     private final int topic;
     private final String title;
-    private final Blob content;
-    private final int numberOfReply;
+    private final String author;
+    private final Blob content;    
 
-    public ForumPosts(int id, Date date, int topic,String title, Blob content,int numberOfReply) {
+    public ForumPosts(int id, Date date, int topic,String title, Blob content,String author) {
         this.id = id;
         this.date = date;
         this.topic = topic;
         this.title = title;
         this.content = content;
-        this.numberOfReply = numberOfReply;
+        this.author = author;
     }
 
     public int getId() {
@@ -63,8 +63,8 @@ public class ForumPosts {
         }
         return fmat.toString();
     }
-    public int getNumberOfReply() {
-        return numberOfReply;
+    public String getAuthor() {
+        return author;
     }
 
 
