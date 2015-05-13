@@ -36,6 +36,8 @@ public class Posting extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             String opcode = "0";
             String option = request.getParameter("topic");
+            String content = request.getParameter("content");
+            String username = request.getParameter("username");
             if (option.equals("0")) {
 
             } else if (option.equals("1")) {
@@ -51,7 +53,7 @@ public class Posting extends HttpServlet {
             }
 
             String title = request.getParameter("title");
-            String content = request.getParameter("content");
+           // String content = request.getParameter("content");
 
             out.println("<!DOCTYPE html>");
             out.println("<html>");
