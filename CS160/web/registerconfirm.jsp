@@ -17,6 +17,7 @@
   <title>San Jose State University Forum - Register</title>
 
     <link rel="stylesheet" href="css/style.css" media="screen" type="text/css" />
+    <meta http-equiv="Refresh" content="5; url=index.html">
 
 </head>
 
@@ -26,9 +27,7 @@
     <h1>Register</h1><br>
   <form>
      <center>You have been registered!</center>
-      <br>
-     <center>Check your email for confirmation.</center>
-      <br>
+      <br>     
   <div class="login-help">
     <a href="index.html">Login</a> • <a href="forgotpassword.html">Forgot Password</a>
   </div>

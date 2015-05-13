@@ -59,24 +59,28 @@ public class Registration extends HttpServlet {
                         if (password.equals(passwordConf)) {
                             //process data 
                             if (addNewUser(userName, email, password)) {
-
-                    //goto confermation page
-                                //could also send user to the login page
-                                //or send an email *still don't what really should go here*
-                            } else {
-                                //give errors on what happend/return user to registration page
-                            }
-                        } else {
-                //reject the passwords, might be posible to do this at the html level
-                /* TEMPLATE FOR DISPLAYING THE JSP
                              request.setAttribute("message", "email is a sjsu email"); // This will be available as ${message}
                              request.setAttribute("message1", "Servlet Register at " + request.getContextPath());
-                             request.setAttribute("message2", "account Name= " + accName);
+                             request.setAttribute("message2", "account Name= " + userName);
                              request.setAttribute("message3", " email= " + email);
-                             request.setAttribute("message4", "password= " + debugHash.getHashedpwString());
-                             request.setAttribute("message5", "STRING!!!");
+                             request.setAttribute("message4", "password= " + password);                            
                              request.getRequestDispatcher("registerconfirm.jsp").forward(request, response);
-                             */
+                            } else {
+                                //give errors on what happend/return user to registration page
+                             request.setAttribute("message", "email is a sjsu email"); // This will be available as ${message}
+                             request.setAttribute("message1", "Servlet Register at " + request.getContextPath());
+                             request.setAttribute("message2", "This Username or Email has already been used.");
+                             request.setAttribute("message3", " email= " + email);
+                             request.setAttribute("message4", " User name= " + userName);
+                             request.setAttribute("message5", "Please try again!!!");
+                             request.getRequestDispatcher("registerFailed.jsp").forward(request, response);
+                            }
+                        } else {
+                             request.setAttribute("message", "email is a sjsu email"); // This will be available as ${message}
+                             request.setAttribute("message1", "Servlet Register at " + request.getContextPath());
+                             request.setAttribute("message2", "The Password you entered do not match");                             
+                             request.setAttribute("message3", "Please try again!!!");
+                             request.getRequestDispatcher("registerFailed.jsp").forward(request, response);
 
                         }
                         /* TODO output your page here. You may use following sample code. */
