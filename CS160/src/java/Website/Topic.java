@@ -71,7 +71,7 @@ public class ForumGraber {
         ArrayList retv = new ArrayList<>();
         int bufferId;
         Date bufferDate;
-        String bufferTopic;
+        int bufferTopic;
         Blob bufferContent;
         int bufferNumberOfReply;
         Database db = new Database();
@@ -99,10 +99,10 @@ public class ForumGraber {
             while (rs.next()) {
                 bufferId = rs.getInt("idPost");
                 bufferDate = rs.getDate("date");
-                bufferTopic = rs.getString("topic");
+                bufferTopic = rs.getInt("topic");
                 bufferContent = rs.getBlob("content");
                 bufferNumberOfReply = rs.getInt("numberOfReply");
-                retv.add(new ForumPosts(bufferId, bufferDate, topic, bufferContent,bufferNumberOfReply));
+                retv.add(new ForumPosts(bufferId, bufferDate, bufferTopic, bufferContent,bufferNumberOfReply));
                 
                 // bufferAcnName = rs.getString("userName");
                 System.out.println("bufferId = " + bufferId);

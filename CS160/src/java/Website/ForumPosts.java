@@ -2,6 +2,8 @@ package Website;
 
 import java.sql.Blob;
 import java.sql.Date;
+import java.sql.SQLException;
+import java.util.Formatter;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -17,11 +19,11 @@ import java.sql.Date;
 public class ForumPosts {
     private final int id;
     private final Date date;
-    private final String topic;
+    private final int topic;
     private final Blob content;
     private final int numberOfReply;
 
-    public ForumPosts(int id, Date date, String topic, Blob content,int numberOfReply) {
+    public ForumPosts(int id, Date date, int topic, Blob content,int numberOfReply) {
         this.id = id;
         this.date = date;
         this.topic = topic;
@@ -36,15 +38,24 @@ public class ForumPosts {
     public Date getDate() {
         return date;
     }
-
-    public String getTopic() {
+    public String getStringDate(){    
+        return date.toString();
+    }
+    public int getTopic() {
         return topic;
     }
 
     public Blob getContent() {
         return content;
     }
-
+    public String getStringContent() throws SQLException{
+        byte[] bufferbyte= content.getBytes(1, (int) content.length());
+        Formatter fmat = new Formatter();
+        for(int i=0; i <bufferbyte.length;i++){
+            fmat.format("c", bufferbyte[i]);
+        }
+        return fmat.toString();
+    }
     public int getNumberOfReply() {
         return numberOfReply;
     }
