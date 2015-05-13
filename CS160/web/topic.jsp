@@ -17,7 +17,7 @@
         <br>
         <div id="menu">
             <table align="center">
-                <tr><th><a href="homepage.html">Home</a> • <a href="account.html">My Account</a> • <a href="http://www.google.com">Create Forum</a> • <a href="http://www.google.com">Contact Us</a></th></tr>
+                <tr><th><a href="homepage.html">Home</a> • <a href="account.html">My Account</a> • <a href="http://www.google.com">Contact Us</a></th></tr>
             </table>            
         </div>
         <br>
