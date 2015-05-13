@@ -7,6 +7,12 @@ package Website;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Blob;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -56,21 +62,82 @@ public class Topic extends HttpServlet {
               request.getRequestDispatcher("topic.jsp").forward(request, response);
         }
     }
-private ArrayList<ForumPosts> getForumPosts(String topic){
-    ArrayList retv = new ArrayList<>();
-    int bufferId;
-    String bufferDate;
-    String bufferTopic;
-    String bufferContent;
-    String bufferOp;
-    int bufferNumberOfReply;
-    
-    
-    
-    
-    
-    return retv;
+
+
+
+public class ForumGraber {
+
+    private ArrayList<ForumPosts> getForumPosts(String topic) {
+        ArrayList retv = new ArrayList<>();
+        int bufferId;
+        Date bufferDate;
+        String bufferTopic;
+        Blob bufferContent;
+        int bufferNumberOfReply;
+        Database db = new Database();
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+
+        /*
+         +++++++++++SQL QUERY STRINGS+++++++++++
+         */
+           String sqlSelectQuery = "SELECT * FROM mydb.posts WHERE topic=?";
+        /*
+         +++++++++++SQL QUERY STRINGS+++++++++++
+         */
+
+
+        try (Connection con = db.mySQLdbconnect()) {
+            statement = con.prepareStatement(sqlSelectQuery);
+            statement.setString(1, topic);
+            //statement.setString(2, email);
+
+            statement = con.prepareStatement(sqlSelectQuery);
+            //statement.setString(1, email);
+            rs = statement.executeQuery();
+
+            while (rs.next()) {
+                bufferId = rs.getInt("idPost");
+                bufferDate = rs.getDate("date");
+                bufferTopic = rs.getString("topic");
+                bufferContent = rs.getBlob("content");
+                bufferNumberOfReply = rs.getInt("numberOfReply");
+                retv.add(new ForumPosts(bufferId, bufferDate, topic, bufferContent,bufferNumberOfReply));
+                
+                // bufferAcnName = rs.getString("userName");
+                System.out.println("bufferId = " + bufferId);
+                // System.out.println("bufferName = " + bufferAcnName);
+            }
+
+            con.close();
+        } catch (SQLException ex) {
+            System.err.println("SQLException: " + ex.getMessage());
+            System.err.println("SQLState: " + ex.getSQLState());
+            System.err.println("VendorError: " + ex.getErrorCode());
+
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                }
+                rs = null;
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException ex) {
+                }
+                statement = null;
+            }
+
+        }
+
+        return retv;
+
+    }
 }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
