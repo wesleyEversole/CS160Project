@@ -50,6 +50,11 @@ public class ForumPosts {
     public Blob getContent() {
         return content;
     }
+    
+    public String getTitle(){
+        return title;
+    }
+    
     public String getStringContent() throws SQLException{
         byte[] bufferbyte= content.getBytes(1, (int) content.length());
         Formatter fmat = new Formatter();
