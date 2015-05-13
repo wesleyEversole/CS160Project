@@ -180,9 +180,9 @@ public class Posting extends HttpServlet {
         return id;
     }
 
-    public boolean makePost(String user,String title, String content,String opCode) {
+    public boolean makePost(String user,String title, String content,String opCode) throws SQLException {
         boolean retv = false;       
-        Blob bufferContent;        
+        Blob bufferContent ;        
         Database db = new Database();  
         PreparedStatement statement = null;
         ResultSet rs = null;
@@ -200,6 +200,8 @@ public class Posting extends HttpServlet {
          */
 
         try (Connection con = db.mySQLdbconnect()) {
+            bufferContent = con.createBlob();
+            bufferContent.setBytes(1,content.getBytes());
             statement = con.prepareStatement(sqlInsertQuery);
             if(statement.executeUpdate()==1){
             retv = true;
