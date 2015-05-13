@@ -21,7 +21,7 @@
             </table>            
         </div>
         <br>
-        
+
         <form action="posting.html">
             <input type="submit" value="Create a thread">
         </form>
@@ -39,6 +39,25 @@
                 <td> 0 topics<br>0 replies </td>
                 <td> <a href="http://www.google.com">Post Title</a><br>By <a href="http://www.google.com">Author</a><br>Some time ago </td>
             </tr>
+
+            <c:forEach begin="1" end= "${no}" step="1" varStatus="loopCounter"
+                       value="${ForumPosts}" var="ForumPosts">
+                <tr>
+                    <td>
+                <c:out value="${ForumPosts.isbn}" />
+                </td>
+                <td>
+                <c:out value="${book.title}" />
+                </td>
+                <td>
+                <c:out value="${book.authors}" />
+                </td>
+                <td>
+                <c:out value="${book.version}" />
+                </td>
+                </tr>
+            </c:forEach>
+
         </table>
     </body>
 </html>

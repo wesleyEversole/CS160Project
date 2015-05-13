@@ -18,15 +18,17 @@ public class ForumPosts {
     private final int id;
     private final Date date;
     private final String topic;
+    private final String title;
     private final Blob content;
     private final int numberOfReply;
 
-    public ForumPosts(int id, Date date, String topic, Blob content,int numberOfReply) {
+    public ForumPosts(int id, Date date, String topic,String title, Blob content,int numberOfReply) {
         this.id = id;
         this.date = date;
         this.topic = topic;
         this.content = content;
         this.numberOfReply = numberOfReply;
+        this.title = title;
     }
 
     public int getId() {

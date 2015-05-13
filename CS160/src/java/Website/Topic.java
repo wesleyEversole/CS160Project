@@ -56,7 +56,10 @@ public class Topic extends HttpServlet {
             } else if (op.equals("5")) {
                 title = "Internship";
             }
-            
+             
+             ArrayList<ForumPosts> temp = getForumPosts(title);
+             
+              request.setAttribute("no",temp.size());
               request.setAttribute("title", title);
               request.setAttribute("title1", title);
               request.getRequestDispatcher("topic.jsp").forward(request, response);
@@ -64,14 +67,12 @@ public class Topic extends HttpServlet {
     }
 
 
-
-public class ForumGraber {
-
-    private ArrayList<ForumPosts> getForumPosts(String topic) {
+   private ArrayList<ForumPosts> getForumPosts(String topic) {
         ArrayList retv = new ArrayList<>();
         int bufferId;
         Date bufferDate;
         String bufferTopic;
+        String bufferTitle;
         Blob bufferContent;
         int bufferNumberOfReply;
         Database db = new Database();
@@ -101,8 +102,9 @@ public class ForumGraber {
                 bufferDate = rs.getDate("date");
                 bufferTopic = rs.getString("topic");
                 bufferContent = rs.getBlob("content");
+                bufferTitle = rs.getString("title");
                 bufferNumberOfReply = rs.getInt("numberOfReply");
-                retv.add(new ForumPosts(bufferId, bufferDate, topic, bufferContent,bufferNumberOfReply));
+                retv.add(new ForumPosts(bufferId, bufferDate, topic,bufferTitle, bufferContent,bufferNumberOfReply));
                 
                 // bufferAcnName = rs.getString("userName");
                 System.out.println("bufferId = " + bufferId);
@@ -136,7 +138,7 @@ public class ForumGraber {
         return retv;
 
     }
-}
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
