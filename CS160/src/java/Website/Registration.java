@@ -35,46 +35,63 @@ public class Registration extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             //might change to User Name
             String userName = request.getParameter("userName");
             String email = request.getParameter("email");
+
             String password = request.getParameter("pass");
             String passwordConf = request.getParameter("vpass");
             if (password.equals(passwordConf)) {
                 //process data 
                 if (addNewUser(userName, email, password)) {
+
+          //  String password = request.getParameter("password");
+                    //String passwordConf = request.getParameter("passwordConfirmation");
+                    String name = ("([A-Z]|[a-z])[a-z]*");
+                    String lastname = "\\." + name;
+                    String emailRegx = name + lastname + "@sjsu.edu";
+                    //might want to add a Regx for how the username will be formated
+                    if (email.matches(emailRegx)) {
+                        //add some reject statement for bad formated email.
+                        if (password.equals(passwordConf)) {
+                            //process data 
+                            if (addNewUser(userName, email, password)) {
+
                     //goto confermation page
-                    //could also send user to the login page
-                    //or send an email *still don't what really should go here*
-                } else {
-                    //give errors on what happend/return user to registration page
-                }
-            } else {
+                                //could also send user to the login page
+                                //or send an email *still don't what really should go here*
+                            } else {
+                                //give errors on what happend/return user to registration page
+                            }
+                        } else {
                 //reject the passwords, might be posible to do this at the html level
                 /* TEMPLATE FOR DISPLAYING THE JSP
-                 request.setAttribute("message", "email is a sjsu email"); // This will be available as ${message}
-                 request.setAttribute("message1", "Servlet Register at " + request.getContextPath());
-                 request.setAttribute("message2", "account Name= " + accName);
-                 request.setAttribute("message3", " email= " + email);
-                 request.setAttribute("message4", "password= " + debugHash.getHashedpwString());
-                 request.setAttribute("message5", "STRING!!!");
-                 request.getRequestDispatcher("registerconfirm.jsp").forward(request, response);
-                 */
+                             request.setAttribute("message", "email is a sjsu email"); // This will be available as ${message}
+                             request.setAttribute("message1", "Servlet Register at " + request.getContextPath());
+                             request.setAttribute("message2", "account Name= " + accName);
+                             request.setAttribute("message3", " email= " + email);
+                             request.setAttribute("message4", "password= " + debugHash.getHashedpwString());
+                             request.setAttribute("message5", "STRING!!!");
+                             request.getRequestDispatcher("registerconfirm.jsp").forward(request, response);
+                             */
 
+                        }
+                        /* TODO output your page here. You may use following sample code. */
+                        out.println("<!DOCTYPE html>");
+                        out.println("<html>");
+                        out.println("<head>");
+                        out.println("<title>Servlet Registration</title>");
+                        out.println("</head>");
+                        out.println("<body>");
+                        out.println("<h1>Servlet Registration at " + request.getContextPath() + "</h1>");
+                        out.println("</body>");
+                        out.println("</html>");
+                    }
+                }
             }
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Registration</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Registration at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
         }
     }
 
