@@ -74,7 +74,7 @@ public class Posting extends HttpServlet {
                 request.setAttribute("title", title);
                 request.getRequestDispatcher("posting.jsp").forward(request, response);
             } else {
-                if (makePost(user, title,content)) {
+                if (makePost(username, title,content,opcode)) {
                      request.setAttribute("title", title);
                      request.setAttribute("title1", title);
                      request.setAttribute("author", username);
@@ -180,19 +180,19 @@ public class Posting extends HttpServlet {
         return id;
     }
 
-    public boolean makePost(int user,String title, String content) {
+    public boolean makePost(String user,String title, String content,String opCode) {
         boolean retv = false;       
         Blob bufferContent;        
         Database db = new Database();  
         PreparedStatement statement = null;
         ResultSet rs = null;
-
+        
         /*
          +++++++++++SQL QUERY STRINGS+++++++++++
          */
         
         String sqlInsertQuery = "INSERT INTO "
-                + "mydb.posts (content,title,op) VALUES(\""+content+"\",\""+title+"\","+user+")";
+                + "mydb.posts (content,title,topic,op) VALUES(\""+content+"\",\""+title+"\","+opCode+",\""+user+"\")";
         
         //String sqlInsertQuery = "INSERT INTO mydb.posts (content,title,op) VALUES(\"testContent\",\"Title\",25)";
         /*
