@@ -7,6 +7,7 @@ package Website;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -55,7 +56,21 @@ public class Topic extends HttpServlet {
               request.getRequestDispatcher("topic.jsp").forward(request, response);
         }
     }
-
+private ArrayList<ForumPosts> getForumPosts(String topic){
+    ArrayList retv = new ArrayList<>();
+    int bufferId;
+    String bufferDate;
+    String bufferTopic;
+    String bufferContent;
+    String bufferOp;
+    int bufferNumberOfReply;
+    
+    
+    
+    
+    
+    return retv;
+}
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
