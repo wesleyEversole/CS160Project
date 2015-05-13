@@ -34,12 +34,6 @@ thread message | author
             <tr>
                 <td> <div id="message">${message}</div> </td>
             </tr>
-            <tr>
-                <th> <div id= author>Author: ${author} </div></th>                
-            </tr>
-            <tr>
-                <td> <div id="message"> ${message} </div> </td>
-            </tr>    
         </table>
             <br>
         <form>   

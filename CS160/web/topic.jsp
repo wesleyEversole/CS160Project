@@ -44,17 +44,14 @@
                        value="${ForumPosts}" var="ForumPosts">
                 <tr>
                     <td>
-                <c:out value="${ForumPosts.isbn}" />
+                <c:out value="${ForumPosts.getTitle()}" />
                 </td>
                 <td>
-                <c:out value="${book.title}" />
+                <c:out value="${ForumPosts.getNumberOfReply()}" />
                 </td>
                 <td>
-                <c:out value="${book.authors}" />
-                </td>
-                <td>
-                <c:out value="${book.version}" />
-                </td>
+                <c:out value="some date" />
+                </td>                
                 </tr>
             </c:forEach>
 
