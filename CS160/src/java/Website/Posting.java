@@ -190,9 +190,10 @@ public class Posting extends HttpServlet {
         /*
          +++++++++++SQL QUERY STRINGS+++++++++++
          */
-        
         String sqlInsertQuery = "INSERT INTO "
-                + "mydb.posts (content,title,topic,op) VALUES(\""+content+"\",\""+title+"\","+opCode+",\""+user+"\")";
+                + "mydb.posts (content,title,topic,op) VALUES(?,?,?,?)";
+//        String sqlInsertQuery = "INSERT INTO "
+//                + "mydb.posts (content,title,topic,op) VALUES(\""+content+"\",\""+title+"\","+opCode+",\""+user+"\")";
         
         //String sqlInsertQuery = "INSERT INTO mydb.posts (content,title,op) VALUES(\"testContent\",\"Title\",25)";
         /*
@@ -203,6 +204,10 @@ public class Posting extends HttpServlet {
             bufferContent = con.createBlob();
             bufferContent.setBytes(1,content.getBytes());
             statement = con.prepareStatement(sqlInsertQuery);
+            statement.setBlob(1, bufferContent);
+            statement.setString(2, title);
+            //statement.setInt(3, opCode);
+            statement.setString(4, user);
             if(statement.executeUpdate()==1){
             retv = true;
             }
