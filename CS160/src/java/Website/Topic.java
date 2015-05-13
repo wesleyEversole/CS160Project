@@ -57,7 +57,7 @@ public class Topic extends HttpServlet {
                 title = "Internship";
             }
              
-             ArrayList<ForumPosts> temp = getForumPosts(title);
+             ArrayList<ForumPosts> temp = getForumPosts(op);
              
               request.setAttribute("no",temp.size());
               request.setAttribute("title", title);
@@ -91,7 +91,7 @@ public class Topic extends HttpServlet {
 
         try (Connection con = db.mySQLdbconnect()) {
             statement = con.prepareStatement(sqlSelectQuery);
-            statement.setString(1, topic);
+            statement.setInt(1, Integer.parseInt(topic));
             //statement.setString(2, email);
 
             statement = con.prepareStatement(sqlSelectQuery);
