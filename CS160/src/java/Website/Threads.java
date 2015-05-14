@@ -40,19 +40,19 @@ public class Threads extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Threads</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Threads at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        
+        String id = request.getParameter("id");
+        int idCode = Integer.parseInt(id);
+        ForumPosts temp = getThread(idCode);
+         //ForumPosts temp = getThread(1);
+        request.setAttribute("title", temp.getTitle());
+        request.setAttribute("title1", temp.getTitle());
+        request.setAttribute("author", temp.getAuthor());
+        request.setAttribute("message", "example data");
+        request.getRequestDispatcher("thread.jsp").forward(request, response);                
         }
     }
-    private ForumPosts getThread(String title){
+    private ForumPosts getThread(int postId){
         ForumPosts retv = null ;
         int bufferId;
         Date bufferDate;
@@ -68,28 +68,24 @@ public class Threads extends HttpServlet {
         /*
          +++++++++++SQL QUERY STRINGS+++++++++++
          */
-           String sqlSelectQuery = "SELECT * FROM mydb.posts WHERE title=?";
+           String sqlSelectQuery = "SELECT * FROM mydb.posts WHERE idPosts="+postId;
         /*
          +++++++++++SQL QUERY STRINGS+++++++++++
          */
 
 
         try (Connection con = db.mySQLdbconnect()) {
-            statement = con.prepareStatement(sqlSelectQuery);
-            statement.setString(1,title);
-            //statement.setString(2, email);
-
-            statement = con.prepareStatement(sqlSelectQuery);
-            //statement.setString(1, email);
+             statement = con.prepareStatement(sqlSelectQuery);            
             rs = statement.executeQuery();
+           
 
             while (rs.next()) {
-                bufferId = rs.getInt("idPost");
+                bufferId = rs.getInt("idPosts");
                 bufferDate = rs.getDate("date");
                 bufferTopic = rs.getInt("topic");
                 bufferContent = rs.getBlob("content");
                 bufferTitle = rs.getString("title");                
-                bufferAuthor = rs.getString("author");
+                bufferAuthor = rs.getString("op");
                 retv=new ForumPosts(bufferId, bufferDate,bufferTopic,bufferTitle, bufferContent,bufferAuthor);
                 
                 // bufferAcnName = rs.getString("userName");

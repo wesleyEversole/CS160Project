@@ -90,12 +90,11 @@ public class Topic extends HttpServlet {
 
         try (Connection con = db.mySQLdbconnect()) {
             String sqlSelectQuery = "SELECT * FROM mydb.posts WHERE topic="+topic;
-            statement = con.prepareStatement(sqlSelectQuery);
+            
            // int temp = Integer.parseInt(topic);
            // System.out.println("topic code: "+temp);
            // statement.setInt(1, temp);
            //statement.setString(2, email);
-
             statement = con.prepareStatement(sqlSelectQuery);
             //statement.setString(1, email);
             rs = statement.executeQuery();

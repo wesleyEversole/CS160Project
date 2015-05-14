@@ -35,7 +35,7 @@
             </tr>
             <!pull data from server here>
             <tr>
-                <td> <a href="thread.jsp">Thread1</a> </td>
+                <td> <a href="Threads?id=1">Thread1</a> </td>
                 <td> 0 topics<br>0 replies </td>
                 <td> <a href="http://www.google.com">Post Title</a><br>By <a href="http://www.google.com">Author</a><br>Some time ago </td>
             </tr>
