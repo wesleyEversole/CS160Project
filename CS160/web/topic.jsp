@@ -39,22 +39,21 @@
                 <td> 0 topics<br>0 replies </td>
                 <td> <a href="http://www.google.com">Post Title</a><br>By <a href="http://www.google.com">Author</a><br>Some time ago </td>
             </tr>
-<!--not working
-            <c:forEach begin="1" end= "${no}" step="1" varStatus="loopCounter"
-                       value="${ForumPosts}" var="ForumPosts">
+
+            <c:forEach items="${rows}" var="row">
                 <tr>
                     <td>
-                <c:out value="${ForumPosts.getTitle()}" />
+                <c:out value="row.title" />
                 </td>
                 <td>
-                <c:out value="${ForumPosts.getNumberOfReply()}" />
+                <c:out value="row.author" />
                 </td>
                 <td>
-                <c:out value="some date" />
+                sometime
                 </td>                
                 </tr>
             </c:forEach>
--->
+
         </table>
     </body>
 </html>

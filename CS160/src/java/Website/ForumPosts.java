@@ -31,6 +31,9 @@ public class ForumPosts {
         this.title = title;
         this.content = content;
         this.author = author;
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("ID: "+id+" topic: "+topic+" Title: "+ title);
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++");
     }
 
     public int getId() {

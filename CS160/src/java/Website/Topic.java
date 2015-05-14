@@ -62,7 +62,10 @@ public class Topic extends HttpServlet {
               request.setAttribute("ForumPosts", temp);
               request.setAttribute("no",temp.size());
               */
+              ArrayList<ForumPosts> temp = getForumPosts(op);
+              System.out.println(temp.size());              
               
+              request.setAttribute("row", temp);
               request.setAttribute("title", title);
               request.setAttribute("title1", title);
               request.getRequestDispatcher("topic.jsp").forward(request, response);
@@ -94,7 +97,9 @@ public class Topic extends HttpServlet {
 
         try (Connection con = db.mySQLdbconnect()) {
             statement = con.prepareStatement(sqlSelectQuery);
-            statement.setInt(1, Integer.parseInt(topic));
+            int temp = Integer.parseInt(topic);
+            System.out.println("topic code: "+temp);
+            statement.setInt(1, temp);
             //statement.setString(2, email);
 
             statement = con.prepareStatement(sqlSelectQuery);
