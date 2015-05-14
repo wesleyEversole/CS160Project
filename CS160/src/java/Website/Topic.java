@@ -15,7 +15,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -64,9 +63,17 @@ public class Topic extends HttpServlet {
               request.setAttribute("ForumPosts", temp);
               request.setAttribute("no",temp.size());
               */
-              List<ForumPosts> temp = getForumPosts(op);
-              System.out.println(temp.size());
-              request.setAttribute("rows", temp);
+              ArrayList<ForumPosts> temp = getForumPosts(op);
+              System.out.println("Size of array:"+ temp.size());
+              for (int i =0; i<temp.size();i++){
+                  System.out.println("==============================");
+                  System.out.println(temp.get(i).getTitle());
+                  System.out.println(temp.get(i).getAuthor());
+                  System.out.println("==============================");
+              }
+              
+              request.setAttribute("table", temp);
+             // request.setAttribute("size", temp.size());
               request.setAttribute("title", title);
               request.setAttribute("title1", title);
               request.getRequestDispatcher("topic.jsp").forward(request, response);
@@ -74,8 +81,8 @@ public class Topic extends HttpServlet {
     }
 
 
-   private List<ForumPosts> getForumPosts(String topic) {
-        List retv = new ArrayList<>();
+   private ArrayList<ForumPosts> getForumPosts(String topic) {
+        ArrayList retv = new ArrayList<>();
         int bufferId;
         Date bufferDate;
         int bufferTopic;
@@ -85,16 +92,25 @@ public class Topic extends HttpServlet {
         int bufferNumberOfReply;
         Database db = new Database();
         PreparedStatement statement = null;
-        ResultSet rs = null;      
+        ResultSet rs = null;
+
+        /*
+         +++++++++++SQL QUERY STRINGS+++++++++++
+         */
+           
+        /*
+         +++++++++++SQL QUERY STRINGS+++++++++++
+         */
 
 
         try (Connection con = db.mySQLdbconnect()) {
             String sqlSelectQuery = "SELECT * FROM mydb.posts WHERE topic="+topic;
-            
+            statement = con.prepareStatement(sqlSelectQuery);
            // int temp = Integer.parseInt(topic);
            // System.out.println("topic code: "+temp);
            // statement.setInt(1, temp);
-           //statement.setString(2, email);
+            //statement.setString(2, email);
+
             statement = con.prepareStatement(sqlSelectQuery);
             //statement.setString(1, email);
             rs = statement.executeQuery();

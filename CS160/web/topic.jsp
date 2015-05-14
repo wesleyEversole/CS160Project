@@ -5,6 +5,9 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -34,26 +37,20 @@
                 <th> Date:</th>
             </tr>
             <!pull data from server here>
-            <tr>
+            <!--tr>
                 <td> <a href="Threads?id=1">Thread1</a> </td>
                 <td> 0 topics<br>0 replies </td>
                 <td> <a href="http://www.google.com">Post Title</a><br>By <a href="http://www.google.com">Author</a><br>Some time ago </td>
-            </tr>
+            </tr-->
 
-            <c:forEach items="${rows}" var="row">
+            <c:forEach items="${table}" var="row">
                 <tr>
-                <td>
-                <c:out value="${row.getTitle()}" />
-                </td>
-                <td>
-                author
-                </td>
-                <td>
-                sometime
-                </td>                
+                    <td>title<td>
+                    <td>author<td>
+                    <td>some date<td>
                 </tr>
             </c:forEach>
-
+                
         </table>
     </body>
 </html>
