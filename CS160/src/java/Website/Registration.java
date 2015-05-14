@@ -10,7 +10,6 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.PreparedStatement;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,7 +34,7 @@ public class Registration extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-             throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             //might change to User Name
@@ -44,62 +43,48 @@ public class Registration extends HttpServlet {
 
             String password = request.getParameter("pass");
             String passwordConf = request.getParameter("vpass");
-            if (password.equals(passwordConf)) {
-                //process data 
-                if (addNewUser(userName, email, password)) {
-
-          //  String password = request.getParameter("password");
-                    //String passwordConf = request.getParameter("passwordConfirmation");
-                    String name = ("([A-Z]|[a-z])[a-z]*");
-                    String lastname = "\\." + name;
-                    String emailRegx = name + lastname + "@sjsu.edu";
-                    //might want to add a Regx for how the username will be formated
-                    if (email.matches(emailRegx)) {
-                        //add some reject statement for bad formated email.
-                        if (password.equals(passwordConf)) {
-                            //process data 
-                            if (addNewUser(userName, email, password)) {
-                             request.setAttribute("message", "email is a sjsu email"); // This will be available as ${message}
-                             request.setAttribute("message1", "Servlet Register at " + request.getContextPath());
-                             request.setAttribute("message2", "account Name= " + userName);
-                             request.setAttribute("message3", " email= " + email);
-                             request.setAttribute("message4", "password= " + password);                            
-                             request.getRequestDispatcher("registerconfirm.jsp").forward(request, response);
-                            } else {
-                                //give errors on what happend/return user to registration page
-                             request.setAttribute("message", "email is a sjsu email"); // This will be available as ${message}
-                             request.setAttribute("message1", "Servlet Register at " + request.getContextPath());
-                             request.setAttribute("message2", "This Username or Email has already been used.");
-                             request.setAttribute("message3", " email= " + email);
-                             request.setAttribute("message4", " User name= " + userName);
-                             request.setAttribute("message5", "Please try again!!!");
-                             request.getRequestDispatcher("registerFailed.jsp").forward(request, response);
-                            }
-                        } else {
-                             request.setAttribute("message", "email is a sjsu email"); // This will be available as ${message}
-                             request.setAttribute("message1", "Servlet Register at " + request.getContextPath());
-                             request.setAttribute("message2", "The Password you entered do not match");                             
-                             request.setAttribute("message3", "Please try again!!!");
-                             request.getRequestDispatcher("registerFailed.jsp").forward(request, response);
-
-                        }
-                        /* TODO output your page here. You may use following sample code. */
-                        out.println("<!DOCTYPE html>");
-                        out.println("<html>");
-                        out.println("<head>");
-                        out.println("<title>Servlet Registration</title>");
-                        out.println("</head>");
-                        out.println("<body>");
-                        out.println("<h1>Servlet Registration at " + request.getContextPath() + "</h1>");
-                        out.println("</body>");
-                        out.println("</html>");
+            String name = ("([A-Z]|[a-z])[a-z]*");
+            String lastname = "\\." + name;
+            String emailRegx = name + lastname + "@sjsu.edu";
+            //might want to add a Regx for how the username will be formated
+            if (email.matches(emailRegx)) {
+                //add some reject statement for bad formated email.
+                if (password.equals(passwordConf)) {
+                    //process data 
+                    if (addNewUser(userName, email, password)) {
+                        request.setAttribute("message", "email is a sjsu email"); // This will be available as ${message}
+                        request.setAttribute("message1", "Servlet Register at " + request.getContextPath());
+                        request.setAttribute("message2", "account Name= " + userName);
+                        request.setAttribute("message3", " email= " + email);
+                        request.setAttribute("message4", "password= " + password);
+                        request.getRequestDispatcher("registerconfirm.jsp").forward(request, response);
+                    } else {
+                        //give errors on what happend/return user to registration page
+                        request.setAttribute("message", "email is a sjsu email"); // This will be available as ${message}
+                        request.setAttribute("message1", "Servlet Register at " + request.getContextPath());
+                        request.setAttribute("message2", "This Username or Email has already been used.");
+                        request.setAttribute("message3", " email= " + email);
+                        request.setAttribute("message4", " User name= " + userName);
+                        request.setAttribute("message5", "Please try again!!!");
+                        request.getRequestDispatcher("registrationFailed.jsp").forward(request, response);
                     }
-                }
+                } else {
+                    request.setAttribute("message", "email is a sjsu email"); // This will be available as ${message}
+                    request.setAttribute("message1", "Servlet Register at " + request.getContextPath());
+                    request.setAttribute("message2", "The Password you entered do not match");
+                    request.setAttribute("message3", "Please try again!!!");
+                    request.getRequestDispatcher("registrationFailed.jsp").forward(request, response);
+
+                }               
+            } else {
+                        request.setAttribute("message", "email is not a sjsu email"); // This will be available as ${message}
+                        request.setAttribute("message1", "Please try again!!!");
+                        request.getRequestDispatcher("registrationFailed.jsp").forward(request, response);
             }
         }
     }
 
-       private boolean addNewUser(String userName, String email, String password) {
+    private boolean addNewUser(String userName, String email, String password) {
 
         //will handle the db stuff
         //might move the hashing stuff to another class to be called here *still don't know at this momment* 
@@ -107,19 +92,19 @@ public class Registration extends HttpServlet {
         Hasher hser = new Hasher();
         PreparedStatement statement = null;
         ResultSet rs = null;
-        int bufferId=-1;
+        int bufferId = -1;
         String bufferAcnName;
         boolean retv = false;
         /*
-        +++++++++++SQL QUERY STRINGS+++++++++++
-        */
+         +++++++++++SQL QUERY STRINGS+++++++++++
+         */
         String sqlInsertQuery = "INSERT INTO `mydb`.`accounts` (`userName`, `email`) VALUES (?, ?);";
         String sqlSelectQuery = "SELECT idAccounts, userName FROM mydb.accounts WHERE email=?";
         String sqlUpdateQuery = "UPDATE `mydb`.`accounts` SET `password`=? WHERE `idAccounts`=?";
         /*
-        +++++++++++SQL QUERY STRINGS+++++++++++
-        */
-         //forlater use
+         +++++++++++SQL QUERY STRINGS+++++++++++
+         */
+        //forlater use
 
         try (Connection con = db.mySQLdbconnect()) {
             statement = con.prepareStatement(sqlInsertQuery);
@@ -131,22 +116,22 @@ public class Registration extends HttpServlet {
                 // adding a SQL call to find the ID of the account
                 statement = con.prepareStatement(sqlSelectQuery);
                 statement.setString(1, email);
-                rs=statement.executeQuery();
+                rs = statement.executeQuery();
                 //might need to add commits where ever I connect to the data base
                 //con.commit();
                 while (rs.next()) {
                     bufferId = rs.getInt("idAccounts");
                     bufferAcnName = rs.getString("userName");
-                    System.out.println("bufferId = "+bufferId);
-                    System.out.println("bufferName = "+bufferAcnName);
+                    System.out.println("bufferId = " + bufferId);
+                    System.out.println("bufferName = " + bufferAcnName);
                 }
-               hser.calcuHash(password, bufferId);
-               statement = con.prepareStatement(sqlUpdateQuery);
-               statement.setString(1, hser.getHashedpwString());
-               statement.setInt(2, bufferId);
-               if(statement.executeUpdate()==1){
-               retv=true;
-               }
+                hser.calcuHash(password, bufferId);
+                statement = con.prepareStatement(sqlUpdateQuery);
+                statement.setString(1, hser.getHashedpwString());
+                statement.setInt(2, bufferId);
+                if (statement.executeUpdate() == 1) {
+                    retv = true;
+                }
             }
 
             con.close();
@@ -172,7 +157,7 @@ public class Registration extends HttpServlet {
             }
 
         }
-        
+
         return retv;
     }
 
