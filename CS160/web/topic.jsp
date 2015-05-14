@@ -42,11 +42,11 @@
 
             <c:forEach items="${rows}" var="row">
                 <tr>
-                    <td>
-                <c:out value="row.title" />
+                <td>
+                <c:out value="${row.getTitle()}" />
                 </td>
                 <td>
-                <c:out value="row.author" />
+                author
                 </td>
                 <td>
                 sometime

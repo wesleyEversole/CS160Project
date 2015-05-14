@@ -15,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -63,10 +64,9 @@ public class Topic extends HttpServlet {
               request.setAttribute("ForumPosts", temp);
               request.setAttribute("no",temp.size());
               */
-              ArrayList<ForumPosts> temp = getForumPosts(op);
-              System.out.println(temp.size());              
-              
-              request.setAttribute("row", temp);
+              List<ForumPosts> temp = getForumPosts(op);
+              System.out.println(temp.size());
+              request.setAttribute("rows", temp);
               request.setAttribute("title", title);
               request.setAttribute("title1", title);
               request.getRequestDispatcher("topic.jsp").forward(request, response);
@@ -74,8 +74,8 @@ public class Topic extends HttpServlet {
     }
 
 
-   private ArrayList<ForumPosts> getForumPosts(String topic) {
-        ArrayList retv = new ArrayList<>();
+   private List<ForumPosts> getForumPosts(String topic) {
+        List retv = new ArrayList<>();
         int bufferId;
         Date bufferDate;
         int bufferTopic;
@@ -85,15 +85,7 @@ public class Topic extends HttpServlet {
         int bufferNumberOfReply;
         Database db = new Database();
         PreparedStatement statement = null;
-        ResultSet rs = null;
-
-        /*
-         +++++++++++SQL QUERY STRINGS+++++++++++
-         */
-           
-        /*
-         +++++++++++SQL QUERY STRINGS+++++++++++
-         */
+        ResultSet rs = null;      
 
 
         try (Connection con = db.mySQLdbconnect()) {
@@ -102,7 +94,7 @@ public class Topic extends HttpServlet {
            // int temp = Integer.parseInt(topic);
            // System.out.println("topic code: "+temp);
            // statement.setInt(1, temp);
-            //statement.setString(2, email);
+           //statement.setString(2, email);
 
             statement = con.prepareStatement(sqlSelectQuery);
             //statement.setString(1, email);
