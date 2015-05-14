@@ -45,7 +45,7 @@
 
             <c:forEach items="${table}" var="row">
                 <tr>
-                    <td><c:out value="${row.title}" /><td>
+                    <td><a href="Threads?id=<c:out value="${row.id}" />"> <c:out value="${row.title}" /><td>
                     <td><c:out value="${row.author}" /><td>
                     <td><c:out value="${row.author}" /><td>
                 </tr>
