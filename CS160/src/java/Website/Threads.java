@@ -14,6 +14,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -48,7 +50,11 @@ public class Threads extends HttpServlet {
         request.setAttribute("title", temp.getTitle());
         request.setAttribute("title1", temp.getTitle());
         request.setAttribute("author", temp.getAuthor());
-        request.setAttribute("message", "example data");
+            try {
+                request.setAttribute("message", temp.getStringContent());
+            } catch (SQLException ex) {
+                Logger.getLogger(Threads.class.getName()).log(Level.SEVERE, null, ex);
+            }
         request.getRequestDispatcher("thread.jsp").forward(request, response);                
         }
     }
