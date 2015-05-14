@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -89,17 +90,18 @@ public class Topic extends HttpServlet {
         /*
          +++++++++++SQL QUERY STRINGS+++++++++++
          */
-           String sqlSelectQuery = "SELECT * FROM mydb.posts WHERE topic=?";
+           
         /*
          +++++++++++SQL QUERY STRINGS+++++++++++
          */
 
 
         try (Connection con = db.mySQLdbconnect()) {
+            String sqlSelectQuery = "SELECT * FROM mydb.posts WHERE topic="+topic;
             statement = con.prepareStatement(sqlSelectQuery);
-            int temp = Integer.parseInt(topic);
-            System.out.println("topic code: "+temp);
-            statement.setInt(1, temp);
+           // int temp = Integer.parseInt(topic);
+           // System.out.println("topic code: "+temp);
+           // statement.setInt(1, temp);
             //statement.setString(2, email);
 
             statement = con.prepareStatement(sqlSelectQuery);
@@ -107,12 +109,12 @@ public class Topic extends HttpServlet {
             rs = statement.executeQuery();
 
             while (rs.next()) {
-                bufferId = rs.getInt("idPost");
+                bufferId = rs.getInt("idPosts");
                 bufferDate = rs.getDate("date");
                 bufferTopic = rs.getInt("topic");
                 bufferContent = rs.getBlob("content");
                 bufferTitle = rs.getString("title");                
-                bufferAuthor = rs.getString("author");
+                bufferAuthor = rs.getString("op");
                 retv.add(new ForumPosts(bufferId, bufferDate,bufferTopic,bufferTitle, bufferContent,bufferAuthor));
                 
                 // bufferAcnName = rs.getString("userName");
@@ -125,6 +127,7 @@ public class Topic extends HttpServlet {
             System.err.println("SQLException: " + ex.getMessage());
             System.err.println("SQLState: " + ex.getSQLState());
             System.err.println("VendorError: " + ex.getErrorCode());
+            System.err.println(Arrays.toString(ex.getStackTrace()));
 
         } finally {
             if (rs != null) {
