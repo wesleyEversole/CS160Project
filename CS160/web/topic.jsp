@@ -45,9 +45,9 @@
 
             <c:forEach items="${table}" var="row">
                 <tr>
-                    <td>title<td>
-                    <td>author<td>
-                    <td>some date<td>
+                    <td><c:out value="${row.title}" /><td>
+                    <td><c:out value="${row.author}" /><td>
+                    <td><c:out value="${row.author}" /><td>
                 </tr>
             </c:forEach>
                 
