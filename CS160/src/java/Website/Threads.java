@@ -7,6 +7,7 @@ package Website;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.Date;
@@ -14,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -50,11 +52,9 @@ public class Threads extends HttpServlet {
         request.setAttribute("title", temp.getTitle());
         request.setAttribute("title1", temp.getTitle());
         request.setAttribute("author", temp.getAuthor());
-            try {
-                request.setAttribute("message", temp.getStringContent());
-            } catch (SQLException ex) {
-                Logger.getLogger(Threads.class.getName()).log(Level.SEVERE, null, ex);
-            }
+          
+                request.setAttribute("message", temp.getContent());
+       
         request.getRequestDispatcher("thread.jsp").forward(request, response);                
         }
     }
@@ -63,6 +63,7 @@ public class Threads extends HttpServlet {
         int bufferId;
         Date bufferDate;
         int bufferTopic;
+        String bufferStringContent="";
         String bufferTitle;
         Blob bufferContent;
         int bufferNumberOfReply;
@@ -92,7 +93,14 @@ public class Threads extends HttpServlet {
                 bufferContent = rs.getBlob("content");
                 bufferTitle = rs.getString("title");                
                 bufferAuthor = rs.getString("op");
-                retv=new ForumPosts(bufferId, bufferDate,bufferTopic,bufferTitle, bufferContent,bufferAuthor);
+                   byte[] bufferbyte= bufferContent.getBytes(1, (int) bufferContent.length());
+                try {
+                    bufferStringContent= new String(bufferbyte, "UTF-8");
+
+                } catch (UnsupportedEncodingException ex) {
+                    Logger.getLogger(Topic.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                retv=new ForumPosts(bufferId, bufferDate,bufferTopic,bufferTitle, bufferStringContent,bufferAuthor);
                 
                 // bufferAcnName = rs.getString("userName");
                 System.out.println("bufferId = " + bufferId);

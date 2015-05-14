@@ -7,6 +7,7 @@ package Website;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.Date;
@@ -15,6 +16,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Formatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -86,6 +90,7 @@ public class Topic extends HttpServlet {
         int bufferId;
         Date bufferDate;
         int bufferTopic;
+        String bufferStringContent="";
         String bufferTitle;
         Blob bufferContent;
         String bufferAuthor;
@@ -122,7 +127,16 @@ public class Topic extends HttpServlet {
                 bufferContent = rs.getBlob("content");
                 bufferTitle = rs.getString("title");                
                 bufferAuthor = rs.getString("op");
-                retv.add(new ForumPosts(bufferId, bufferDate,bufferTopic,bufferTitle, bufferContent,bufferAuthor));
+                
+                   byte[] bufferbyte= bufferContent.getBytes(1, (int) bufferContent.length());
+                try {
+                    bufferStringContent= new String(bufferbyte, "UTF-8");
+
+                } catch (UnsupportedEncodingException ex) {
+                    Logger.getLogger(Topic.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                retv.add(new ForumPosts(bufferId, bufferDate,bufferTopic,bufferTitle, bufferStringContent,bufferAuthor));
                 
                 // bufferAcnName = rs.getString("userName");
                 System.out.println("bufferId = " + bufferId);

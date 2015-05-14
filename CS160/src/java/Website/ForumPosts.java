@@ -22,9 +22,9 @@ public class ForumPosts {
     private final int topic;
     private final String title;
     private final String author;
-    private final Blob content;    
+    private final String content;    
 
-    public ForumPosts(int id, Date date, int topic,String title, Blob content,String author) {
+    public ForumPosts(int id, Date date, int topic,String title, String content,String author) {
         this.id = id;
         this.date = date;
         this.topic = topic;
@@ -50,7 +50,7 @@ public class ForumPosts {
         return topic;
     }
 
-    public Blob getContent() {
+    public String getContent() {
         return content;
     }
     
@@ -58,14 +58,14 @@ public class ForumPosts {
         return title;
     }
     
-    public String getStringContent() throws SQLException{
-        byte[] bufferbyte= content.getBytes(1, (int) content.length());
-        Formatter fmat = new Formatter();
-        for(int i=0; i <bufferbyte.length;i++){
-            fmat.format("c", bufferbyte[i]);
-        }
-        return fmat.toString();
-    }
+//    public String getStringContent() throws SQLException{
+//        byte[] bufferbyte= content.getBytes(1, (int) content.length());
+//        Formatter fmat = new Formatter();
+//        for(int i=0; i <bufferbyte.length;i++){
+//            fmat.format("c", bufferbyte[i]);
+//        }
+//        return fmat.toString();
+//    }
     public String getAuthor() {
         return author;
     }
