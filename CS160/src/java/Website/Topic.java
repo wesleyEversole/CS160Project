@@ -127,20 +127,20 @@ public class Topic extends HttpServlet {
                 bufferContent = rs.getBlob("content");
                 bufferTitle = rs.getString("title");                
                 bufferAuthor = rs.getString("op");
-                
-                   byte[] bufferbyte= bufferContent.getBytes(1, (int) bufferContent.length());
+                /*
+                byte[] bufferbyte= bufferContent.getBytes(1, (int) bufferContent.length());
                 try {
                     bufferStringContent= new String(bufferbyte, "UTF-8");
 
                 } catch (UnsupportedEncodingException ex) {
                     Logger.getLogger(Topic.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+                */
                 retv.add(new ForumPosts(bufferId, bufferDate,bufferTopic,bufferTitle, bufferStringContent,bufferAuthor));
                 
-                // bufferAcnName = rs.getString("userName");
-                System.out.println("bufferId = " + bufferId);
-                // System.out.println("bufferName = " + bufferAcnName);
+                // String bufferAcnName = rs.getString("userName");
+                //System.out.println("bufferId = " + bufferId);
+                 //System.out.println("bufferName = " + bufferAcnName);
             }
 
             con.close();
