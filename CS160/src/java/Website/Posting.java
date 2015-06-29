@@ -9,9 +9,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Blob;
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
+//import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
@@ -191,7 +193,7 @@ public class Posting extends HttpServlet {
          +++++++++++SQL QUERY STRINGS+++++++++++
          */
         String sqlInsertQuery = "INSERT INTO "
-                + "mydb.posts (content,title,topic,op) VALUES(?,?,?,?)";
+                + "mydb.posts (content,title,topic,op,date) VALUES(?,?,?,?,?)";
 //        String sqlInsertQuery = "INSERT INTO "
 //                + "mydb.posts (content,title,topic,op) VALUES(\""+content+"\",\""+title+"\","+opCode+",\""+user+"\")";
         
@@ -208,6 +210,9 @@ public class Posting extends HttpServlet {
             statement.setString(2, title);
             statement.setInt(3, Integer.parseInt(opCode));
             statement.setString(4, user);
+            Date date = new Date();
+            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+            statement.setDate(5, sqlDate);
             if(statement.executeUpdate()==1){
             retv = true;
             }
